@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 class CustomCategoryPicker extends StatelessWidget {
   const CustomCategoryPicker({required this.changeCategory, super.key});
 
-  final void Function(String? category) changeCategory;
+  final void Function(Category? category) changeCategory;
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +19,7 @@ class CustomCategoryPicker extends StatelessWidget {
           style: context.titleSmall,
         ),
         Gap.h12,
-        DropdownButtonFormField2<String>(
+        DropdownButtonFormField2<Category>(
           decoration: InputDecoration(
             contentPadding: EdgeInsets.zero,
             border: const OutlineInputBorder(),
@@ -30,8 +30,8 @@ class CustomCategoryPicker extends StatelessWidget {
           style: context.titleSmall,
           items: Category.values
               .map(
-                (category) => DropdownMenuItem<String>(
-                  value: category.name,
+                (category) => DropdownMenuItem<Category>(
+                  value: category,
                   child: Text(category.name),
                 ),
               )
