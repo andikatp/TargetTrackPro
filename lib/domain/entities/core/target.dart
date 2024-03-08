@@ -1,9 +1,9 @@
 import 'package:business/core/utils/enums.dart';
 import 'package:equatable/equatable.dart';
 
-
 class Target extends Equatable {
   const Target({
+    required this.id,
     required this.name,
     required this.category,
     required this.weight,
@@ -13,6 +13,7 @@ class Target extends Equatable {
     required this.endDate,
   });
 
+  final String id;
   final String name;
   final Category category;
   final int weight;
@@ -22,7 +23,5 @@ class Target extends Equatable {
   final DateTime endDate;
 
   @override
-  List<Object?> get props => [name, category, weight, startDate, endDate];
-
-  
+  List<String?> get props => [id];
 }

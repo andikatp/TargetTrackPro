@@ -1,8 +1,11 @@
 import 'package:business/core/utils/enums.dart';
 import 'package:business/domain/entities/core/target.dart';
+import 'package:floor/floor.dart';
 
+@Entity(tableName: 'target', primaryKeys: ['id'])
 class TargetModel extends Target {
   const TargetModel({
+    required super.id,
     required super.name,
     required super.category,
     required super.weight,
@@ -14,6 +17,7 @@ class TargetModel extends Target {
 
   factory TargetModel.fromJson(Map<String, dynamic> map) {
     return TargetModel(
+      id: map['id'] as String,
       name: map['name'] as String,
       category: Category.fromJson(map['category'] as String),
       weight: map['weight'] as int,
@@ -26,6 +30,7 @@ class TargetModel extends Target {
 
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
+      'id': id,
       'name': name,
       'category': category.toJson(),
       'weight': weight,
@@ -46,6 +51,7 @@ class TargetModel extends Target {
     DateTime? endDate,
   }) {
     return TargetModel(
+      id: id,
       name: name ?? this.name,
       category: category ?? this.category,
       weight: weight ?? this.weight,
