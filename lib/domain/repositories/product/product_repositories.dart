@@ -4,8 +4,8 @@ import 'package:business/domain/entities/core/target.dart';
 abstract class ProductRepository {
   const ProductRepository();
 
-   ResultFuture<List<Target>> getTargetProducts();
-   ResultFuture<void> saveTargetProduct(Target target);
-   ResultFuture<void> editTargetProduct(Target target);
-   ResultFuture<void> deleteTargetProduct(Target target);
+   ResultFuture<List<Target>> getProductTargets();
+   ResultFuture<void> saveProductTarget(Target target);
+   ResultFuture<void> editProductTarget(Target target);
+   ResultFuture<void> deleteProductTarget(Target target);
 }
