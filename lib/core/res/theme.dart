@@ -6,11 +6,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AppTheme {
   AppTheme._();
-  static final currentTheme = ThemeData(
-    colorSchemeSeed: Colours.primaryColor,
-    scaffoldBackgroundColor: Colours.backgroundColor,
-    brightness: Brightness.dark,
-    textTheme: AppFonts.textTheme,
+
+  static ThemeData lightTheme = ThemeData(
+    colorSchemeSeed: Colours.redColor,
+    scaffoldBackgroundColor: Colours.whiteColor,
+    brightness: Brightness.light,
+    textTheme: AppFonts.textLightTheme,
     actionIconTheme: ActionIconThemeData(
       backButtonIconBuilder: (_) => const Icon(
         Icons.chevron_left,
@@ -18,15 +19,19 @@ class AppTheme {
       ),
     ),
     appBarTheme: AppBarTheme(
-      backgroundColor: Colours.backgroundColor,
+      backgroundColor: Colours.redColor,
       centerTitle: true,
       titleTextStyle: TextStyle(
         fontSize: 20.sp,
         fontWeight: FontWeight.w700,
       ),
       iconTheme: const IconThemeData(
-        color: Colours.primaryColor,
+        color: Colours.redColor,
       ),
+    ),
+    floatingActionButtonTheme: const FloatingActionButtonThemeData(
+      backgroundColor: Colours.redColor,
+      foregroundColor: Colours.whiteColor,
     ),
     textButtonTheme: TextButtonThemeData(
       style: TextButton.styleFrom(
