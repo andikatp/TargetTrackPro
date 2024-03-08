@@ -7,6 +7,7 @@ class CustomTextField extends StatelessWidget {
     required this.labelText,
     required this.controller,
     required this.icon,
+    required this.validator,
     this.type,
     super.key,
   });
@@ -15,6 +16,7 @@ class CustomTextField extends StatelessWidget {
   final TextEditingController controller;
   final TextInputType? type;
   final IconData icon;
+  final String? Function(String? value) validator;
 
   @override
   Widget build(BuildContext context) {
@@ -37,6 +39,7 @@ class CustomTextField extends StatelessWidget {
             hintText: labelText,
             hintStyle: context.bodyMedium,
           ),
+          validator: validator,
         ),
       ],
     );
