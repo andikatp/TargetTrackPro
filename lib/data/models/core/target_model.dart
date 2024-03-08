@@ -15,6 +15,19 @@ class TargetModel extends Target {
     required super.endDate,
   });
 
+  factory TargetModel.fromEntity(Target target) {
+    return TargetModel(
+      id: target.id,
+      name: target.name,
+      category: target.category,
+      weight: target.weight,
+      status: target.status,
+      type: target.type,
+      startDate: target.startDate,
+      endDate: target.endDate,
+    );
+  }
+
   factory TargetModel.fromJson(Map<String, dynamic> map) {
     return TargetModel(
       id: map['id'] as String,
