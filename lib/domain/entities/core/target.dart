@@ -1,11 +1,13 @@
+import 'package:business/core/utils/enums.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/foundation.dart';
 
 class Target extends Equatable {
   const Target({
     required this.name,
     required this.category,
     required this.weight,
+    required this.status,
+    required this.type,
     required this.startDate,
     required this.endDate,
   });
@@ -13,6 +15,8 @@ class Target extends Equatable {
   final String name;
   final Category category;
   final int weight;
+  final Status status;
+  final TargetType type;
   final DateTime startDate;
   final DateTime endDate;
 
