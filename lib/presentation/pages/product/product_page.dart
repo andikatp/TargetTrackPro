@@ -1,7 +1,6 @@
 import 'package:animations/animations.dart';
 import 'package:business/core/constants/app_sizes.dart';
 import 'package:business/core/extensions/extension.dart';
-import 'package:business/core/res/colours.dart';
 import 'package:business/presentation/blocs/product/bloc/product_bloc.dart';
 import 'package:business/presentation/pages/product/add_target_page.dart';
 import 'package:flutter/cupertino.dart';
@@ -17,12 +16,12 @@ class ProductPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: OpenContainer(
-        openShape: const CircleBorder(),
-        closedBuilder: (context, action) => FloatingActionButton(
+        useRootNavigator: true,
+        closedBuilder: (_, action) => FloatingActionButton(
           onPressed: action,
           child: const Icon(Icons.add),
         ),
-        openBuilder: (context, action) => const AddTargetPage(),
+        openBuilder: (context, __) => const AddTargetPage(),
       ),
       body: Center(
         child: BlocConsumer<ProductBloc, ProductState>(
@@ -48,8 +47,10 @@ class ProductPage extends StatelessWidget {
                       spacing: Sizes.p16.h,
                       children: [
                         Lottie.asset('assets/json/empty.json', width: 0.9.sw),
-                        Text('Targets are empty, try adding them',
-                            style: context.labelMedium,),
+                        Text(
+                          'Targets are empty, try adding them',
+                          style: context.labelLarge,
+                        ),
                       ],
                     )
                   : ListView.separated(

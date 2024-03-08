@@ -38,5 +38,25 @@ class AppTheme {
         padding: REdgeInsets.symmetric(vertical: 10, horizontal: 8),
       ),
     ),
+    outlinedButtonTheme: OutlinedButtonThemeData(
+      style: OutlinedButton.styleFrom(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(Sizes.p8),
+        ),
+        minimumSize: const Size.fromHeight(Sizes.p44),
+        foregroundColor: Colors.black,
+        textStyle: TextStyle(fontSize: 18.sp),
+      ),
+    ),
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ElevatedButton.styleFrom(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(Sizes.p8),
+        ),
+        backgroundColor: Colours.redColor,
+        foregroundColor: Colours.whiteColor,
+        minimumSize: Size.fromHeight(Sizes.p56.h),
+      ),
+    ),
   );
 }
