@@ -1,5 +1,25 @@
-enum Category { quantitative, qualitative }
+enum Category {
+  quantitative,
+  qualitative;
 
-enum Status { toDo, inProgress, done }
+  String toJson() => name;
+  static Category fromJson(String json) => values.byName(json);
+}
 
-enum TargetType { product, business, marketing }
+enum Status {
+  toDo,
+  inProgress,
+  done;
+
+  String toJson() => name;
+  static Status fromJson(String json) => values.byName(json);
+}
+
+enum TargetType {
+  product,
+  business,
+  marketing;
+
+  String toJson() => name;
+  static TargetType fromJson(String json) => values.byName(json);
+}
