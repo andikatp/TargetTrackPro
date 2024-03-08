@@ -1,5 +1,4 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: type=lint
 
 part of 'app_database.dart';
 
@@ -118,6 +117,20 @@ class _$TargetDao extends TargetDao {
                   'startDate': _dateTimeConverter.encode(item.startDate),
                   'endDate': _dateTimeConverter.encode(item.endDate)
                 }),
+        _targetModelUpdateAdapter = UpdateAdapter(
+            database,
+            'target',
+            ['id'],
+            (TargetModel item) => <String, Object?>{
+                  'id': item.id,
+                  'name': item.name,
+                  'category': item.category.index,
+                  'weight': item.weight,
+                  'status': item.status.index,
+                  'type': item.type.index,
+                  'startDate': _dateTimeConverter.encode(item.startDate),
+                  'endDate': _dateTimeConverter.encode(item.endDate)
+                }),
         _targetModelDeletionAdapter = DeletionAdapter(
             database,
             'target',
@@ -141,6 +154,8 @@ class _$TargetDao extends TargetDao {
 
   final InsertionAdapter<TargetModel> _targetModelInsertionAdapter;
 
+  final UpdateAdapter<TargetModel> _targetModelUpdateAdapter;
+
   final DeletionAdapter<TargetModel> _targetModelDeletionAdapter;
 
   @override
@@ -158,12 +173,17 @@ class _$TargetDao extends TargetDao {
   }
 
   @override
-  Future<void> saveMovie(TargetModel target) async {
+  Future<void> saveProductTarget(TargetModel target) async {
     await _targetModelInsertionAdapter.insert(target, OnConflictStrategy.abort);
   }
 
   @override
-  Future<void> deleteSavedMovie(TargetModel target) async {
+  Future<void> editProductTarget(TargetModel target) async {
+    await _targetModelUpdateAdapter.update(target, OnConflictStrategy.replace);
+  }
+
+  @override
+  Future<void> deleteProductTarget(TargetModel target) async {
     await _targetModelDeletionAdapter.delete(target);
   }
 }
