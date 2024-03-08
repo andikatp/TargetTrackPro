@@ -15,8 +15,8 @@ class ProductRepositoriesImpl implements ProductRepository {
   @override
   ResultFuture<void> deleteProductTarget(Target target) async {
     try {
-      final result =
-          await _database.targetDao.deleteProductTarget(target as TargetModel);
+      final result = await _database.targetDao
+          .deleteProductTarget(TargetModel.fromEntity(target));
       return Right(result);
     } catch (e) {
       return Left(CacheFailure(message: e.toString()));
@@ -26,8 +26,8 @@ class ProductRepositoriesImpl implements ProductRepository {
   @override
   ResultFuture<void> editProductTarget(Target target) async {
     try {
-      final result =
-          await _database.targetDao.editProductTarget(target as TargetModel);
+      final result = await _database.targetDao
+          .editProductTarget(TargetModel.fromEntity(target));
       return Right(result);
     } catch (e) {
       return Left(CacheFailure(message: e.toString()));
@@ -47,8 +47,8 @@ class ProductRepositoriesImpl implements ProductRepository {
   @override
   ResultFuture<void> saveProductTarget(Target target) async {
     try {
-      final result =
-          await _database.targetDao.saveProductTarget(target as TargetModel);
+      final result = await _database.targetDao
+          .saveProductTarget(TargetModel.fromEntity(target));
       return Right(result);
     } catch (e) {
       return Left(CacheFailure(message: e.toString()));

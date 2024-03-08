@@ -5,7 +5,7 @@ import 'package:business/domain/usecases/product/delete_product_target.dart';
 import 'package:business/domain/usecases/product/edit_product_target.dart';
 import 'package:business/domain/usecases/product/get_product_targets.dart';
 import 'package:business/domain/usecases/product/save_product_target.dart';
-import 'package:business/presentation/blocs/bloc/product_bloc.dart';
+import 'package:business/presentation/blocs/product/bloc/product_bloc.dart';
 import 'package:get_it/get_it.dart';
 
 part 'dependency_container.main.dart';
