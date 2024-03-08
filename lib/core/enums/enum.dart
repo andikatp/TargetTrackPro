@@ -1,0 +1,1 @@
+enum Category { quantitative, qualitative }
