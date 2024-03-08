@@ -12,6 +12,6 @@ abstract class TargetDao {
   @delete
   Future<void> deleteProductTarget(TargetModel target);
 
-  @Query('SELECT * FROM movies WHERE type = product')
+  @Query('SELECT * FROM target WHERE type = 0')
   Future<List<TargetModel>> getProductTargets();
 }
