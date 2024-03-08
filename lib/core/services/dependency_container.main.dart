@@ -1,6 +1,6 @@
 part of 'dependency_container.dart';
 
-final sl = GetIt.asNewInstance();
+final sl = GetIt.instance;
 
 Future<void> init() async {
   await productInit();
@@ -11,7 +11,7 @@ Future<void> productInit() async {
       await $FloorAppDatabase.databaseBuilder('app_database.db').build();
 
   sl
-    ..registerSingleton(
+    ..registerFactory(
       () => ProductBloc(
         getProductTargets: sl(),
         saveProductTarget: sl(),

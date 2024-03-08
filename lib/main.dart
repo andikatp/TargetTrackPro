@@ -31,7 +31,8 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           routes: {
             '/': (context) => BlocProvider(
-                  create: (context) => sl<ProductBloc>(),
+                  create: (context) =>
+                      sl<ProductBloc>()..add(const GetProductTargetEvent()),
                   child: const ProductPage(),
                 ),
           },

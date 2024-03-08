@@ -1,4 +1,5 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 
 part of 'app_database.dart';
 
@@ -160,7 +161,7 @@ class _$TargetDao extends TargetDao {
 
   @override
   Future<List<TargetModel>> getProductTargets() async {
-    return _queryAdapter.queryList('SELECT * FROM movies WHERE type = product',
+    return _queryAdapter.queryList('SELECT * FROM target WHERE type = 0',
         mapper: (Map<String, Object?> row) => TargetModel(
             id: row['id'] as String,
             name: row['name'] as String,

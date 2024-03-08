@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:business/core/utils/enums.dart';
-import 'package:business/data/datasource/DAO/movie_dao.dart';
+import 'package:business/data/datasource/DAO/target_dao.dart';
 import 'package:business/data/models/core/target_model.dart';
 import 'package:floor/floor.dart';
 import 'package:sqflite/sqflite.dart' as sqflite;
