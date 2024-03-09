@@ -3,6 +3,7 @@ import 'package:business/presentation/pages/business/business_page.dart';
 import 'package:business/presentation/pages/marketing/marketing_page.dart';
 import 'package:business/presentation/pages/product/product_page.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -26,7 +27,11 @@ class _MainPageState extends State<MainPage> {
                 Icons.person,
                 color: Colours.whiteColor,
               ),
-              onPressed: () {},
+              onPressed: () async {
+                final sharedPreferences = await SharedPreferences.getInstance();
+                await sharedPreferences.setBool('isLoggedIn', false);
+                // Navigator.pushReplacement(context, newRoute);
+              },
             ),
           ],
           bottom: TabBar(
