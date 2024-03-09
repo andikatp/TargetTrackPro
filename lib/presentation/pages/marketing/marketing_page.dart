@@ -36,7 +36,7 @@ class MarketingPage extends StatelessWidget {
         category: category,
         weight: weight,
         status: Status.toDo,
-        type: TargetType.business,
+        type: TargetType.marketing,
         startDate: startDate!,
         endDate: endDate!,
       );

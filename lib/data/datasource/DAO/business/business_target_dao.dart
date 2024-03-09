@@ -12,6 +12,6 @@ abstract class BusinessTargetDao {
   @delete
   Future<void> deleteBusinessTarget(TargetModel target);
 
-  @Query('SELECT * FROM target WHERE type = 0')
+  @Query('SELECT * FROM target WHERE type = 1')
   Future<List<TargetModel>> getBusinessTargets();
 }
