@@ -1,6 +1,6 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:business/core/constants/app_sizes.dart';
 import 'package:business/core/res/colours.dart';
+import 'package:business/domain/entities/core/target.dart';
 import 'package:custom_date_range_picker/custom_date_range_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -9,10 +9,12 @@ import 'package:intl/intl.dart';
 class CustomDatePicker extends StatefulWidget {
   const CustomDatePicker({
     required this.changeDateRange,
+    this.target,
     super.key,
   });
 
   final void Function(DateTime? startDate, DateTime? endDate) changeDateRange;
+  final Target? target;
 
   @override
   State<CustomDatePicker> createState() => _CustomDatePickerState();
@@ -47,6 +49,13 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
         widget.changeDateRange(startDate, endDate);
       },
     );
+  }
+
+  @override
+  void initState() {
+    startDate = widget.target?.startDate;
+    endDate = widget.target?.endDate;
+    super.initState();
   }
 
   @override

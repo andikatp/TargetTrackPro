@@ -25,6 +25,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
     on<SaveProductTargetEvent>(_saveProductTargetsHandler);
     on<EditProductTargetEvent>(_editProductTargetsHandler);
     on<DeleteProductTargetEvent>(_deleteProductTargetsHandler);
+    // on<EditStatusProductTargetEvent>(_editStatusProductTargetsHandler);
   }
 
   final GetProductTargets _getProductTargets;
@@ -85,7 +86,19 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
           errorMessage: failure.errorMessage,
         ),
       ),
-      (_) => emit(state.copyWith(status: ProductStatus.success)),
+      (_) {
+        final updatedTargets = state.targets
+            .map(
+              (target) => target.id == event.target.id ? event.target : target,
+            )
+            .toList();
+        emit(
+          state.copyWith(
+            status: ProductStatus.success,
+            targets: updatedTargets,
+          ),
+        );
+      },
     );
   }
 
