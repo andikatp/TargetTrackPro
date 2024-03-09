@@ -1,5 +1,5 @@
 # business
-
+[![Dart](https://github.com/andikatp/story/actions/workflows/dart.yml/badge.svg)](https://github.com/andikatp/story/actions/workflows/dart.yml)
 A new Flutter project.
 
 ## Getting Started
