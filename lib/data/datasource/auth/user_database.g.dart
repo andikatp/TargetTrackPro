@@ -124,7 +124,7 @@ class _$UserDao extends UserDao {
 
   @override
   Future<UserModel?> login(String email) async {
-    return _queryAdapter.query('SELECT * FROM target WHERE email = ?1',
+    return _queryAdapter.query('SELECT * FROM user WHERE email = ?1',
         mapper: (Map<String, Object?> row) => UserModel(
             email: row['email'] as String,
             password: row['password'] as String,

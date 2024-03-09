@@ -31,7 +31,6 @@ class GeneralInputField extends StatelessWidget {
           style: context.bodyMedium,
           controller: controller,
           keyboardType: type,
-          autofocus: true,
           decoration: InputDecoration(
             contentPadding: REdgeInsets.all(20),
             border: OutlineInputBorder(

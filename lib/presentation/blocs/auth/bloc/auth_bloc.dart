@@ -1,4 +1,3 @@
-import 'package:business/core/utils/enums.dart';
 import 'package:business/domain/entities/core/user.dart';
 import 'package:business/domain/usecases/auth/login.dart';
 import 'package:business/domain/usecases/auth/register.dart';
@@ -28,7 +27,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     final result =
         await _login(LoginParams(email: event.email, password: event.password));
     result.fold(
-      (failure) => emit(AuthError(message: failure.errorMessage)),
+      (failure) => emit(AuthError(message: failure.message)),
       (user) => emit(AuthLoggedIn(user: user)),
     );
   }
@@ -37,13 +36,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     AuthRegisterEvent event,
     Emitter<AuthState> emit,
   ) async {
-    final result = await _register(
-      RegisterParams(
-        email: event.email,
-        password: event.password,
-        role: event.role,
-      ),
-    );
+    final result = await _register(event.user);
     result.fold(
       (failure) => emit(AuthError(message: failure.errorMessage)),
       (_) => emit(const AuthRegistered()),

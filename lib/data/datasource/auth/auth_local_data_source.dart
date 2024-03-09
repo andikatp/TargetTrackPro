@@ -1,5 +1,4 @@
 import 'package:business/core/errors/exceptions.dart';
-import 'package:business/core/utils/enums.dart';
 import 'package:business/data/datasource/auth/user_database.dart';
 import 'package:business/data/models/core/user_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -8,11 +7,7 @@ abstract class AuthLocalDataSource {
   const AuthLocalDataSource();
 
   Future<UserModel> login({required String email, required String password});
-  Future<void> register({
-    required String email,
-    required String password,
-    required UserRole role,
-  });
+  Future<void> register({required UserModel user});
 }
 
 class AuthLocalDataSourceImpl implements AuthLocalDataSource {
@@ -48,20 +43,15 @@ class AuthLocalDataSourceImpl implements AuthLocalDataSource {
   }
 
   @override
-  Future<void> register({
-    required String email,
-    required String password,
-    required UserRole role,
-  }) async {
+  Future<void> register({required UserModel user}) async {
     try {
-      final isUserExist = await _database.userDao.login(email);
+      final isUserExist = await _database.userDao.login(user.email);
       if (isUserExist != null) {
         throw const CacheException(
           message: 'User already exists! Please login',
         );
       }
-      final newUser = UserModel(email: email, password: password, role: role);
-      await _database.userDao.register(newUser);
+      await _database.userDao.register(user);
     } catch (e) {
       throw CacheException(message: e.toString());
     }

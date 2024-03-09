@@ -86,7 +86,7 @@ Future<void> marketingInit() async {
 
 Future<void> initAuth() async {
   final userDatabase =
-      await $FloorUserDatabase.databaseBuilder('app_database.db').build();
+      await $FloorUserDatabase.databaseBuilder('user_database.db').build();
 
   sl
     ..registerFactory(() => AuthBloc(login: sl(), register: sl()))
