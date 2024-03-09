@@ -2,6 +2,7 @@ import 'package:business/core/res/colours.dart';
 import 'package:business/presentation/pages/business/business_page.dart';
 import 'package:business/presentation/pages/marketing/marketing_page.dart';
 import 'package:business/presentation/pages/product/product_page.dart';
+import 'package:business/presentation/pages/splash/splash_page.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -29,8 +30,15 @@ class _MainPageState extends State<MainPage> {
               ),
               onPressed: () async {
                 final sharedPreferences = await SharedPreferences.getInstance();
-                await sharedPreferences.setBool('isLoggedIn', false);
-                // Navigator.pushReplacement(context, newRoute);
+                await sharedPreferences.remove('isLoggedIn');
+                if (context.mounted) {
+                  await Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute<dynamic>(
+                      builder: (context) => const SplashPage(),
+                    ),
+                  );
+                }
               },
             ),
           ],
