@@ -1,48 +1,57 @@
 import 'package:business/core/constants/app_sizes.dart';
 import 'package:business/core/extensions/extension.dart';
 import 'package:business/core/res/colours.dart';
+import 'package:business/core/utils/enums.dart';
+import 'package:business/domain/entities/core/user.dart';
 import 'package:business/presentation/blocs/auth/bloc/auth_bloc.dart';
-import 'package:business/presentation/pages/auth/register_page.dart';
+import 'package:business/presentation/pages/auth/login_page.dart';
 import 'package:business/presentation/pages/main/main_page.dart';
 import 'package:business/presentation/widgets/auth/input_field.dart';
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class LoginPage extends StatelessWidget {
-  const LoginPage({super.key});
+class RegisterPage extends StatefulWidget {
+  const RegisterPage({super.key});
+
+  @override
+  State<RegisterPage> createState() => _RegisterPageState();
+}
+
+class _RegisterPageState extends State<RegisterPage> {
+  final formKey = GlobalKey<FormState>();
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+  UserRole selectedRole = UserRole.user;
+
+  String? emailValidator(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Email is required';
+    }
+    const emailPattern = r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$';
+    final regex = RegExp(emailPattern);
+
+    if (!regex.hasMatch(value)) {
+      return 'Please check your email address';
+    }
+    return null;
+  }
+
+  void registerHandler() {
+    FocusManager.instance.primaryFocus?.unfocus();
+    if (formKey.currentState!.validate()) {
+      final email = emailController.text.trim();
+      final password = passwordController.text.trim();
+      final newUser =
+          User(email: email, password: password, role: selectedRole);
+      context.read<AuthBloc>().add(AuthRegisterEvent(user: newUser));
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    final formKey = GlobalKey<FormState>();
-    final emailController = TextEditingController();
-    final passwordController = TextEditingController();
-
-    String? emailValidator(String? value) {
-      if (value == null || value.isEmpty) {
-        return 'Email is required';
-      }
-      const emailPattern = r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$';
-      final regex = RegExp(emailPattern);
-
-      if (!regex.hasMatch(value)) {
-        return 'Please check your email address';
-      }
-      return null;
-    }
-
-    void loginHandler() {
-      FocusManager.instance.primaryFocus?.unfocus();
-      if (formKey.currentState!.validate()) {
-        final email = emailController.text.trim();
-        final password = passwordController.text.trim();
-        context
-            .read<AuthBloc>()
-            .add(AuthLoginEvent(email: email, password: password));
-      }
-    }
-
     return Scaffold(
       resizeToAvoidBottomInset: true,
       body: SafeArea(
@@ -74,6 +83,39 @@ class LoginPage extends StatelessWidget {
                     ),
                     Gap.h20,
                     PasswordInputField(controller: passwordController),
+                    Gap.h20,
+                    Wrap(
+                      runSpacing: Sizes.p12,
+                      children: [
+                        Text('Role', style: context.labelMedium),
+                        DropdownButton2<UserRole>(
+                          value: selectedRole,
+                          buttonStyleData: ButtonStyleData(
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                              border: Border.all(width: 0.5),
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            padding: REdgeInsets.symmetric(
+                              horizontal: 12,
+                              vertical: 8,
+                            ),
+                          ),
+                          style: context.titleSmall,
+                          items: UserRole.values
+                              .map(
+                                (userRole) => DropdownMenuItem<UserRole>(
+                                  value: userRole,
+                                  child: Text(userRole.name),
+                                ),
+                              )
+                              .toList(),
+                          onChanged: (value) => setState(
+                            () => selectedRole = value!,
+                          ),
+                        ),
+                      ],
+                    ),
                     Gap.h28,
                     if (state is AuthError)
                       Text(
@@ -83,7 +125,7 @@ class LoginPage extends StatelessWidget {
                       ),
                     Gap.h20,
                     ElevatedButton(
-                      onPressed: state is AuthLoading ? null : loginHandler,
+                      onPressed: state is AuthLoading ? null : registerHandler,
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colours.redColor,
                         foregroundColor: Colours.whiteColor,
@@ -100,17 +142,17 @@ class LoginPage extends StatelessWidget {
                       ),
                       child: state is AuthLoading
                           ? const CupertinoActivityIndicator()
-                          : const Text('Login'),
+                          : const Text('Register'),
                     ),
                     TextButton(
                       onPressed: () => Navigator.pushReplacement(
                         context,
                         MaterialPageRoute<dynamic>(
-                          builder: (context) => const RegisterPage(),
+                          builder: (context) => const LoginPage(),
                         ),
                       ),
                       child: Text(
-                        'Register',
+                        'Login',
                         style:
                             context.bodySmall.copyWith(color: Colours.redColor),
                       ),

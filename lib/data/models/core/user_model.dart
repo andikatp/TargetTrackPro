@@ -8,4 +8,12 @@ class UserModel extends User {
     required super.password,
     required super.role,
   });
+
+  factory UserModel.fromEntity(User user) {
+    return UserModel(
+      email: user.email,
+      password: user.password,
+      role: user.role,
+    );
+  }
 }

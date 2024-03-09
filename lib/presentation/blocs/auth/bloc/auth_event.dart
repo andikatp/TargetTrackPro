@@ -17,16 +17,10 @@ class AuthLoginEvent extends AuthEvent {
 }
 
 class AuthRegisterEvent extends AuthEvent {
-  const AuthRegisterEvent({
-    required this.email,
-    required this.password,
-    required this.role,
-  });
+  const AuthRegisterEvent({required this.user});
 
-  final String email;
-  final String password;
-  final UserRole role;
+  final User user;
 
   @override
-  List<Object> get props => [email, password, role];
+  List<Object> get props => [user];
 }
