@@ -16,18 +16,35 @@ abstract class AuthLocalDataSource {
 }
 
 class AuthLocalDataSourceImpl implements AuthLocalDataSource {
-  AuthLocalDataSourceImpl(
-      {required SharedPreferences preference, required UserDatabase database,})
-      : _preference = preference,
+  AuthLocalDataSourceImpl({
+    required SharedPreferences preference,
+    required UserDatabase database,
+  })  : _preference = preference,
         _database = database;
 
   final SharedPreferences _preference;
   final UserDatabase _database;
 
   @override
-  Future<UserModel> login(
-      {required String email, required String password,}) async {
-    return UserModel(email: email, password: password, role: UserRole.business);
+  Future<UserModel> login({
+    required String email,
+    required String password,
+  }) async {
+    try {
+      final user = await _database.userDao.login(email);
+      if (user == null) {
+        throw const CacheException(message: 'User not found! Please register');
+      }
+      if (user.password != password) {
+        throw const CacheException(
+          message: 'Password is incorrect! Please check your password.',
+        );
+      }
+      await _preference.setBool('isLoggedIn', true);
+      return user;
+    } catch (e) {
+      throw CacheException(message: e.toString());
+    }
   }
 
   @override
@@ -35,8 +52,18 @@ class AuthLocalDataSourceImpl implements AuthLocalDataSource {
     required String email,
     required String password,
     required UserRole role,
-  }) {
-    // TODO: implement register
-    throw UnimplementedError();
+  }) async {
+    try {
+      final isUserExist = await _database.userDao.login(email);
+      if (isUserExist != null) {
+        throw const CacheException(
+          message: 'User already exists! Please login',
+        );
+      }
+      final newUser = UserModel(email: email, password: password, role: role);
+      await _database.userDao.register(newUser);
+    } catch (e) {
+      throw CacheException(message: e.toString());
+    }
   }
 }
