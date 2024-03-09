@@ -5,7 +5,6 @@ import 'package:business/core/utils/enums.dart';
 import 'package:business/domain/entities/core/user.dart';
 import 'package:business/presentation/blocs/auth/bloc/auth_bloc.dart';
 import 'package:business/presentation/pages/auth/login_page.dart';
-import 'package:business/presentation/pages/main/main_page.dart';
 import 'package:business/presentation/widgets/auth/input_field.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/cupertino.dart';
@@ -51,6 +50,13 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: true,
@@ -61,11 +67,15 @@ class _RegisterPageState extends State<RegisterPage> {
           key: formKey,
           child: BlocConsumer<AuthBloc, AuthState>(
             listener: (context, state) {
-              if (state is AuthLoggedIn) {
+              if (state is AuthRegistered) {
+                ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('Please Login Now')),
+                );
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute<dynamic>(
-                    builder: (context) => const MainPage(),
+                    builder: (context) => const LoginPage(),
                   ),
                 );
               }
