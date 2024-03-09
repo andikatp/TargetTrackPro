@@ -5,6 +5,7 @@ final sl = GetIt.instance;
 Future<void> init() async {
   await productInit();
   await businessInit();
+  await marketingInit();
 }
 
 Future<void> productInit() async {
@@ -35,9 +36,9 @@ Future<void> businessInit() async {
     ..registerFactory(
       () => BusinessBloc(
         getBusinessTargets: sl(),
-        saveBusinessTargets: sl(),
-        editBusinessTargets: sl(),
-        deleteBusinessTargets: sl(),
+        saveBusinessTarget: sl(),
+        editBusinessTarget: sl(),
+        deleteBusinessTarget: sl(),
       ),
     )
     ..registerLazySingleton(() => GetBusinessTargets(repository: sl()))
@@ -46,5 +47,24 @@ Future<void> businessInit() async {
     ..registerLazySingleton(() => DeleteBusinessTarget(repository: sl()))
     ..registerLazySingleton<BusinessRepository>(
       () => BusinessRepositoriesImpl(database: sl()),
+    );
+}
+
+Future<void> marketingInit() async {
+  sl
+    ..registerFactory(
+      () => MarketingBloc(
+        getMarketingTargets: sl(),
+        saveMarketingTarget: sl(),
+        editMarketingTarget: sl(),
+        deleteMarketingTarget: sl(),
+      ),
+    )
+    ..registerLazySingleton(() => GetMarketingTargets(repository: sl()))
+    ..registerLazySingleton(() => SaveMarketingTarget(repository: sl()))
+    ..registerLazySingleton(() => EditMarketingTarget(repository: sl()))
+    ..registerLazySingleton(() => DeleteMarketingTarget(repository: sl()))
+    ..registerLazySingleton<MarketingRepository>(
+      () => MarketingRepositoriesImpl(database: sl()),
     );
 }

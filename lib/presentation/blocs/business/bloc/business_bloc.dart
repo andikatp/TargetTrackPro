@@ -12,13 +12,13 @@ part 'business_state.dart';
 class BusinessBloc extends Bloc<BusinessEvent, BusinessState> {
   BusinessBloc({
     required GetBusinessTargets getBusinessTargets,
-    required SaveBusinessTarget saveBusinessTargets,
-    required EditBusinessTarget editBusinessTargets,
-    required DeleteBusinessTarget deleteBusinessTargets,
+    required SaveBusinessTarget saveBusinessTarget,
+    required EditBusinessTarget editBusinessTarget,
+    required DeleteBusinessTarget deleteBusinessTarget,
   })  : _getBusinessTargets = getBusinessTargets,
-        _saveBusinessTarget = saveBusinessTargets,
-        _editBusinessTarget = editBusinessTargets,
-        _deleteBusinessTarget = deleteBusinessTargets,
+        _saveBusinessTarget = saveBusinessTarget,
+        _editBusinessTarget = editBusinessTarget,
+        _deleteBusinessTarget = deleteBusinessTarget,
         super(const BusinessState()) {
     on<BusinessEvent>((event, emit) => emit(state));
     on<GetBusinessTargetEvent>(_getBusinessTargetsHandler);
