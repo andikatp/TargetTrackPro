@@ -3,20 +3,20 @@ import 'package:business/core/utils/typedef.dart';
 import 'package:business/data/datasource/app_database.dart';
 import 'package:business/data/models/core/target_model.dart';
 import 'package:business/domain/entities/core/target.dart';
-import 'package:business/domain/repositories/product/product_repositories.dart';
+import 'package:business/domain/repositories/business/business_repositories.dart';
 import 'package:dartz/dartz.dart';
 
-class ProductRepositoriesImpl implements ProductRepository {
-  ProductRepositoriesImpl({required AppDatabase database})
+class BusinessRepositoriesImpl implements BusinessRepository {
+  BusinessRepositoriesImpl({required AppDatabase database})
       : _database = database;
 
   final AppDatabase _database;
 
   @override
-  ResultFuture<void> deleteProductTarget(Target target) async {
+  ResultFuture<void> deleteBusinessTarget(Target target) async {
     try {
-      final result = await _database.productTargetDao
-          .deleteProductTarget(TargetModel.fromEntity(target));
+      final result = await _database.businessTargetDao
+          .deleteBusinessTarget(TargetModel.fromEntity(target));
       return Right(result);
     } catch (e) {
       return Left(CacheFailure(message: e.toString()));
@@ -24,10 +24,10 @@ class ProductRepositoriesImpl implements ProductRepository {
   }
 
   @override
-  ResultFuture<void> editProductTarget(Target target) async {
+  ResultFuture<void> editBusinessTarget(Target target) async {
     try {
-      final result = await _database.productTargetDao
-          .editProductTarget(TargetModel.fromEntity(target));
+      final result = await _database.businessTargetDao
+          .editBusinessTarget(TargetModel.fromEntity(target));
       return Right(result);
     } catch (e) {
       return Left(CacheFailure(message: e.toString()));
@@ -35,9 +35,9 @@ class ProductRepositoriesImpl implements ProductRepository {
   }
 
   @override
-  ResultFuture<List<Target>> getProductTargets() async {
+  ResultFuture<List<Target>> getBusinessTargets() async {
     try {
-      final result = await _database.productTargetDao.getProductTargets();
+      final result = await _database.businessTargetDao.getBusinessTargets();
       return Right(result);
     } catch (e) {
       return Left(CacheFailure(message: e.toString()));
@@ -45,10 +45,10 @@ class ProductRepositoriesImpl implements ProductRepository {
   }
 
   @override
-  ResultFuture<void> saveProductTarget(Target target) async {
+  ResultFuture<void> saveBusinessTarget(Target target) async {
     try {
-      final result = await _database.productTargetDao
-          .saveProductTarget(TargetModel.fromEntity(target));
+      final result = await _database.businessTargetDao
+          .saveBusinessTarget(TargetModel.fromEntity(target));
       return Right(result);
     } catch (e) {
       return Left(CacheFailure(message: e.toString()));
