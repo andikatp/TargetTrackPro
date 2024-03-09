@@ -27,6 +27,9 @@ class MyApp extends StatelessWidget {
           create: (_) => sl<SplashCubit>(),
         ),
         BlocProvider(
+          create: (_) => sl<AuthBloc>(),
+        ),
+        BlocProvider(
           create: (_) => sl<ProductBloc>()..add(const GetProductTargetEvent()),
         ),
         BlocProvider(
@@ -36,9 +39,6 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (_) =>
               sl<MarketingBloc>()..add(const GetMarketingTargetEvent()),
-        ),
-        BlocProvider(
-          create: (_) => sl<AuthBloc>(),
         ),
       ],
       child: GestureDetector(

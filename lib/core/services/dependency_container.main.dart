@@ -4,6 +4,7 @@ final sl = GetIt.instance;
 
 Future<void> init() async {
   await initSplash();
+  await initAuth();
   await productInit();
   await businessInit();
   await marketingInit();
@@ -83,9 +84,9 @@ Future<void> marketingInit() async {
     );
 }
 
-Future<void> authInit() async {
+Future<void> initAuth() async {
   final userDatabase =
-      await $FloorAppDatabase.databaseBuilder('app_database.db').build();
+      await $FloorUserDatabase.databaseBuilder('app_database.db').build();
 
   sl
     ..registerFactory(() => AuthBloc(login: sl(), register: sl()))
@@ -97,5 +98,5 @@ Future<void> authInit() async {
     ..registerLazySingleton<AuthLocalDataSource>(
       () => AuthLocalDataSourceImpl(preference: sl(), database: sl()),
     )
-    ..registerSingleton<AppDatabase>(userDatabase);
+    ..registerSingleton<UserDatabase>(userDatabase);
 }
