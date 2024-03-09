@@ -4,7 +4,7 @@ import 'package:business/presentation/blocs/auth/bloc/auth_bloc.dart';
 import 'package:business/presentation/blocs/business/bloc/business_bloc.dart';
 import 'package:business/presentation/blocs/marketing/bloc/marketing_bloc.dart';
 import 'package:business/presentation/blocs/product/bloc/product_bloc.dart';
-import 'package:business/presentation/pages/main/main_page.dart';
+import 'package:business/presentation/pages/splash/splash_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -46,7 +46,7 @@ class MyApp extends StatelessWidget {
             theme: AppTheme.lightTheme,
             // darkTheme: AppTheme.darkTheme,
             debugShowCheckedModeBanner: false,
-            home: const MainPage(),
+            home: const SplashPage(),
           ),
         ),
       ),
