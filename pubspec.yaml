@@ -25,6 +25,7 @@ dependencies:
   get_it: ^7.6.7
   intl: ^0.18.1
   lottie: ^3.1.0
+  shared_preferences: ^2.2.2
   sqflite: ^2.3.2
   uuid: ^4.3.3
   very_good_analysis: ^5.1.0
