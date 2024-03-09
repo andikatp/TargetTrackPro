@@ -1,6 +1,6 @@
 import 'package:business/core/errors/failures.dart';
 import 'package:business/core/utils/typedef.dart';
-import 'package:business/data/datasource/app_database.dart';
+import 'package:business/data/datasource/core/app_database.dart';
 import 'package:business/data/models/core/target_model.dart';
 import 'package:business/domain/entities/core/target.dart';
 import 'package:business/domain/repositories/product/product_repositories.dart';

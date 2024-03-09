@@ -1,4 +1,4 @@
-import 'package:business/data/datasource/app_database.dart';
+import 'package:business/data/datasource/core/app_database.dart';
 import 'package:business/data/repositories/business/business_repositories_impl.dart';
 import 'package:business/data/repositories/marketing/marketing_repositories_impl.dart';
 import 'package:business/data/repositories/product/product_repositories_impl.dart';
