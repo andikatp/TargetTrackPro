@@ -21,11 +21,11 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (_) => sl<ProductBloc>()..add(const GetProductTargetEvent()),
-        ),
-        BlocProvider(
           create: (_) =>
               sl<BusinessBloc>()..add(const GetBusinessTargetEvent()),
+        ),
+        BlocProvider(
+          create: (_) => sl<ProductBloc>()..add(const GetProductTargetEvent()),
         ),
       ],
       child: GestureDetector(

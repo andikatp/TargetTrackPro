@@ -55,7 +55,6 @@ class ProductPage extends StatelessWidget {
 
     return Scaffold(
       floatingActionButton: OpenContainer(
-        useRootNavigator: true,
         closedBuilder: (_, action) => FloatingActionButton(
           onPressed: action,
           child: const Icon(Icons.add),

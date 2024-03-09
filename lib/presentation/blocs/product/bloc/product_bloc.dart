@@ -25,7 +25,6 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
     on<SaveProductTargetEvent>(_saveProductTargetsHandler);
     on<EditProductTargetEvent>(_editProductTargetsHandler);
     on<DeleteProductTargetEvent>(_deleteProductTargetsHandler);
-    // on<EditStatusProductTargetEvent>(_editStatusProductTargetsHandler);
   }
 
   final GetProductTargets _getProductTargets;
