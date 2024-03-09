@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:business/core/utils/enums.dart';
-import 'package:business/data/datasource/DAO/target_dao.dart';
+import 'package:business/data/datasource/DAO/business/business_target_dao.dart';
+import 'package:business/data/datasource/DAO/product/product_target_dao.dart';
 import 'package:business/data/models/core/target_model.dart';
 import 'package:floor/floor.dart';
 import 'package:sqflite/sqflite.dart' as sqflite;
@@ -11,7 +12,8 @@ part 'app_database.g.dart';
 @TypeConverters([DateTimeConverter])
 @Database(version: 1, entities: [TargetModel])
 abstract class AppDatabase extends FloorDatabase {
-  TargetDao get targetDao;
+  ProductTargetDao get productTargetDao;
+  BusinessTargetDao get businessTargetDao;
 }
 
 class DateTimeConverter extends TypeConverter<DateTime, int> {

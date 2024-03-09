@@ -62,7 +62,9 @@ class _$AppDatabase extends AppDatabase {
     changeListener = listener ?? StreamController<String>.broadcast();
   }
 
-  TargetDao? _targetDaoInstance;
+  ProductTargetDao? _productTargetDaoInstance;
+
+  BusinessTargetDao? _businessTargetDaoInstance;
 
   Future<sqflite.Database> open(
     String path,
@@ -95,13 +97,20 @@ class _$AppDatabase extends AppDatabase {
   }
 
   @override
-  TargetDao get targetDao {
-    return _targetDaoInstance ??= _$TargetDao(database, changeListener);
+  ProductTargetDao get productTargetDao {
+    return _productTargetDaoInstance ??=
+        _$ProductTargetDao(database, changeListener);
+  }
+
+  @override
+  BusinessTargetDao get businessTargetDao {
+    return _businessTargetDaoInstance ??=
+        _$BusinessTargetDao(database, changeListener);
   }
 }
 
-class _$TargetDao extends TargetDao {
-  _$TargetDao(
+class _$ProductTargetDao extends ProductTargetDao {
+  _$ProductTargetDao(
     this.database,
     this.changeListener,
   )   : _queryAdapter = QueryAdapter(database),
@@ -185,6 +194,95 @@ class _$TargetDao extends TargetDao {
 
   @override
   Future<void> deleteProductTarget(TargetModel target) async {
+    await _targetModelDeletionAdapter.delete(target);
+  }
+}
+
+class _$BusinessTargetDao extends BusinessTargetDao {
+  _$BusinessTargetDao(
+    this.database,
+    this.changeListener,
+  )   : _queryAdapter = QueryAdapter(database),
+        _targetModelInsertionAdapter = InsertionAdapter(
+            database,
+            'target',
+            (TargetModel item) => <String, Object?>{
+                  'id': item.id,
+                  'name': item.name,
+                  'category': item.category.index,
+                  'weight': item.weight,
+                  'status': item.status.index,
+                  'type': item.type.index,
+                  'startDate': _dateTimeConverter.encode(item.startDate),
+                  'endDate': _dateTimeConverter.encode(item.endDate)
+                }),
+        _targetModelUpdateAdapter = UpdateAdapter(
+            database,
+            'target',
+            ['id'],
+            (TargetModel item) => <String, Object?>{
+                  'id': item.id,
+                  'name': item.name,
+                  'category': item.category.index,
+                  'weight': item.weight,
+                  'status': item.status.index,
+                  'type': item.type.index,
+                  'startDate': _dateTimeConverter.encode(item.startDate),
+                  'endDate': _dateTimeConverter.encode(item.endDate)
+                }),
+        _targetModelDeletionAdapter = DeletionAdapter(
+            database,
+            'target',
+            ['id'],
+            (TargetModel item) => <String, Object?>{
+                  'id': item.id,
+                  'name': item.name,
+                  'category': item.category.index,
+                  'weight': item.weight,
+                  'status': item.status.index,
+                  'type': item.type.index,
+                  'startDate': _dateTimeConverter.encode(item.startDate),
+                  'endDate': _dateTimeConverter.encode(item.endDate)
+                });
+
+  final sqflite.DatabaseExecutor database;
+
+  final StreamController<String> changeListener;
+
+  final QueryAdapter _queryAdapter;
+
+  final InsertionAdapter<TargetModel> _targetModelInsertionAdapter;
+
+  final UpdateAdapter<TargetModel> _targetModelUpdateAdapter;
+
+  final DeletionAdapter<TargetModel> _targetModelDeletionAdapter;
+
+  @override
+  Future<List<TargetModel>> getBusinessTargets() async {
+    return _queryAdapter.queryList('SELECT * FROM target WHERE type = 0',
+        mapper: (Map<String, Object?> row) => TargetModel(
+            id: row['id'] as String,
+            name: row['name'] as String,
+            category: Category.values[row['category'] as int],
+            weight: row['weight'] as int,
+            status: Status.values[row['status'] as int],
+            type: TargetType.values[row['type'] as int],
+            startDate: _dateTimeConverter.decode(row['startDate'] as int),
+            endDate: _dateTimeConverter.decode(row['endDate'] as int)));
+  }
+
+  @override
+  Future<void> saveBusinessTarget(TargetModel target) async {
+    await _targetModelInsertionAdapter.insert(target, OnConflictStrategy.abort);
+  }
+
+  @override
+  Future<void> editBusinessTarget(TargetModel target) async {
+    await _targetModelUpdateAdapter.update(target, OnConflictStrategy.replace);
+  }
+
+  @override
+  Future<void> deleteBusinessTarget(TargetModel target) async {
     await _targetModelDeletionAdapter.delete(target);
   }
 }

@@ -2,7 +2,7 @@ import 'package:business/data/models/core/target_model.dart';
 import 'package:floor/floor.dart';
 
 @dao
-abstract class TargetDao {
+abstract class ProductTargetDao {
   @insert
   Future<void> saveProductTarget(TargetModel target);
 
