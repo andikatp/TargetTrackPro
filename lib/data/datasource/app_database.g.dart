@@ -357,7 +357,6 @@ class _$MarketingTargetDao extends MarketingTargetDao {
   @override
   Future<List<TargetModel>> getMarketingTargets() async {
     return _queryAdapter.queryList('SELECT * FROM target WHERE type = 2',
-
         mapper: (Map<String, Object?> row) => TargetModel(
             id: row['id'] as String,
             name: row['name'] as String,
