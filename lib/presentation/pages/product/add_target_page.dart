@@ -1,51 +1,52 @@
 import 'package:business/core/constants/app_sizes.dart';
 import 'package:business/core/utils/enums.dart';
-import 'package:business/domain/entities/core/target.dart';
-import 'package:business/presentation/blocs/product/bloc/product_bloc.dart';
 import 'package:business/presentation/widgets/custom_category_picker.dart';
 import 'package:business/presentation/widgets/custom_date_picker.dart';
 import 'package:business/presentation/widgets/custom_textfield.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:uuid/uuid.dart';
 
-class AddTargetPage extends StatelessWidget {
-  const AddTargetPage({super.key});
+class AddTargetPage extends StatefulWidget {
+  const AddTargetPage({required this.addTarget, super.key});
+
+  final void Function({
+    required TextEditingController nameController,
+    required Category category,
+    required TextEditingController weightController,
+    required DateTime? startDate,
+    required DateTime? endDate,
+  }) addTarget;
+
+  @override
+  State<AddTargetPage> createState() => _AddTargetPageState();
+}
+
+class _AddTargetPageState extends State<AddTargetPage> {
+  late GlobalKey<FormState> formKey;
+  late TextEditingController nameController;
+  late TextEditingController weightController;
+  Category category = Category.quantitative;
+  DateTime? startDate;
+  DateTime? endDate;
+
+  @override
+  void initState() {
+    formKey = GlobalKey<FormState>();
+    nameController = TextEditingController();
+    weightController = TextEditingController();
+    super.initState();
+  }
+
+  void getDate(DateTime? startDateFromWidget, DateTime? endDateFromWidget) {
+    startDate = startDateFromWidget;
+    endDate = endDateFromWidget;
+  }
+
+  void getCategory(Category? categoryFromWidget) =>
+      category = categoryFromWidget!;
 
   @override
   Widget build(BuildContext context) {
-    final formKey = GlobalKey<FormState>();
-    final nameController = TextEditingController();
-    final weightController = TextEditingController();
-    var category = Category.quantitative;
-    DateTime? startDate;
-    DateTime? endDate;
-
-    void getDate(DateTime? startDateFromWidget, DateTime? endDateFromWidget) {
-      startDate = startDateFromWidget;
-      endDate = endDateFromWidget;
-    }
-
-    void getCategory(Category? categoryFromWidget) =>
-        category = categoryFromWidget!;
-
-    void addTarget() {
-      if (formKey.currentState!.validate()) {
-        final target = Target(
-          id: const Uuid().v4(),
-          name: nameController.text.trim(),
-          category: category,
-          weight: int.parse(weightController.text.trim()),
-          status: Status.toDo,
-          type: TargetType.product,
-          startDate: startDate!,
-          endDate: endDate!,
-        );
-        context.read<ProductBloc>().add(SaveProductTargetEvent(target: target));
-      }
-    }
-
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
@@ -55,7 +56,18 @@ class AddTargetPage extends StatelessWidget {
         ),
       ),
       floatingActionButton: ElevatedButton(
-        onPressed: addTarget,
+        onPressed: () {
+          if (formKey.currentState!.validate()) {
+            widget.addTarget(
+              nameController: nameController,
+              category: category,
+              weightController: weightController,
+              startDate: startDate,
+              endDate: endDate,
+            );
+            Navigator.pop(context);
+          }
+        },
         style: ElevatedButton.styleFrom(
           shape: const BeveledRectangleBorder(),
           minimumSize: const Size.fromHeight(Sizes.p64),
@@ -87,7 +99,7 @@ class AddTargetPage extends StatelessWidget {
                 type: TextInputType.number,
                 icon: Icons.monitor_weight,
                 validator: (value) =>
-                      value == '' ? 'Please enter weight' : null,
+                    value == '' ? 'Please enter weight' : null,
               ),
               Gap.h20,
               CustomDatePicker(changeDateRange: getDate),

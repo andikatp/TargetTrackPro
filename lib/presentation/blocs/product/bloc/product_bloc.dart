@@ -19,8 +19,8 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
         _saveProductTarget = saveProductTarget,
         _editProductTarget = editProductTarget,
         _deleteProductTarget = deleteProductTarget,
-        super(const ProductInitial()) {
-    on<ProductEvent>((event, emit) => emit(const ProductInitial()));
+        super(const ProductState()) {
+    on<ProductEvent>((event, emit) => emit(state));
     on<GetProductTargetEvent>(_getProductTargetsHandler);
     on<SaveProductTargetEvent>(_saveProductTargetsHandler);
     on<EditProductTargetEvent>(_editProductTargetsHandler);
@@ -38,8 +38,14 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
   ) async {
     final result = await _getProductTargets();
     result.fold(
-      (failure) => emit(ProductTargetsError(message: failure.errorMessage)),
-      (targets) => emit(ProductTargetsLoaded(targets: targets)),
+      (failure) => emit(
+        state.copyWith(
+          status: ProductStatus.error,
+          errorMessage: failure.errorMessage,
+        ),
+      ),
+      (targets) =>
+          emit(state.copyWith(status: ProductStatus.success, targets: targets)),
     );
   }
 
@@ -49,8 +55,21 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
   ) async {
     final result = await _saveProductTarget(event.target);
     result.fold(
-      (failure) => emit(ProductTargetsError(message: failure.errorMessage)),
-      (_) => emit(const ProductDone()),
+      (failure) => emit(
+        state.copyWith(
+          status: ProductStatus.error,
+          errorMessage: failure.errorMessage,
+        ),
+      ),
+      (_) {
+        final updatedTargets = List.of(state.targets)..add(event.target);
+        emit(
+          state.copyWith(
+            status: ProductStatus.success,
+            targets: updatedTargets,
+          ),
+        );
+      },
     );
   }
 
@@ -60,8 +79,13 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
   ) async {
     final result = await _editProductTarget(event.target);
     result.fold(
-      (failure) => emit(ProductTargetsError(message: failure.errorMessage)),
-      (_) => emit(const ProductDone()),
+      (failure) => emit(
+        state.copyWith(
+          status: ProductStatus.error,
+          errorMessage: failure.errorMessage,
+        ),
+      ),
+      (_) => emit(state.copyWith(status: ProductStatus.success)),
     );
   }
 
@@ -71,8 +95,20 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
   ) async {
     final result = await _deleteProductTarget(event.target);
     result.fold(
-      (failure) => emit(ProductTargetsError(message: failure.errorMessage)),
-      (_) => emit(const ProductDone()),
+      (failure) => emit(
+        state.copyWith(
+          status: ProductStatus.error,
+          errorMessage: failure.errorMessage,
+        ),
+      ),
+      (_) => emit(
+        state.copyWith(
+          status: ProductStatus.success,
+          targets: state.targets
+              .where((target) => target.id != event.target.id)
+              .toList(),
+        ),
+      ),
     );
   }
 }
