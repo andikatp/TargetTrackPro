@@ -21,6 +21,8 @@ class ProductPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Key listViewKey = UniqueKey();
+
     void addTarget({
       required TextEditingController nameController,
       required Category category,
@@ -41,13 +43,14 @@ class ProductPage extends StatelessWidget {
       context.read<ProductBloc>().add(SaveProductTargetEvent(target: target));
     }
 
-    void deleteProductTarget(Target target) {
-      context.read<ProductBloc>().add(
-            DeleteProductTargetEvent(
-              target: target,
-            ),
-          );
-    }
+    void changeStatus(Target target) =>
+        context.read<ProductBloc>().add(EditProductTargetEvent(target: target));
+
+    void deleteProductTarget(Target target) => context.read<ProductBloc>().add(
+          DeleteProductTargetEvent(
+            target: target,
+          ),
+        );
 
     return Scaffold(
       floatingActionButton: OpenContainer(
@@ -60,87 +63,87 @@ class ProductPage extends StatelessWidget {
           addTarget: addTarget,
         ),
       ),
-      body: SafeArea(
-        minimum: REdgeInsets.all(Sizes.p28).copyWith(bottom: 0),
-        child: Center(
-          child: BlocConsumer<ProductBloc, ProductState>(
-            listener: (context, state) {
-              if (state.status == ProductStatus.error) {
-                ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                ScaffoldMessenger.of(context)
-                    .showSnackBar(SnackBar(content: Text(state.errorMessage)));
-              }
-            },
-            builder: (context, state) {
-              switch (state.status) {
-                case ProductStatus.initial:
-                  return const SizedBox();
-                case ProductStatus.loading:
-                  return const CupertinoActivityIndicator();
-                case ProductStatus.error:
-                  return Text(state.errorMessage);
-                case ProductStatus.success:
-                  final targets = state.targets;
-                  return targets.isEmpty
-                      ? Wrap(
-                          direction: Axis.vertical,
-                          crossAxisAlignment: WrapCrossAlignment.center,
-                          spacing: Sizes.p16.h,
-                          children: [
-                            Lottie.asset(
-                              'assets/json/empty.json',
-                              width: 0.9.sw,
-                            ),
-                            Text(
-                              'Targets are empty, try adding them',
-                              style: context.labelLarge,
-                            ),
-                          ],
-                        )
-                      : AnimationLimiter(
-                          child: ListView.separated(
-                            itemCount: targets.length,
-                            separatorBuilder: (context, index) =>
-                                const Divider(),
-                            itemBuilder: (context, index) =>
-                                AnimationConfiguration.staggeredList(
-                              position: index,
-                              duration: const Duration(milliseconds: 375),
-                              child: SlideAnimation(
-                                verticalOffset: 50,
-                                child: FadeInAnimation(
-                                  child: SwipeActionCell(
-                                    key: ObjectKey(targets[index]),
-                                    trailingActions: <SwipeAction>[
-                                      SwipeAction(
-                                        backgroundRadius: 15,
-                                        icon: const Icon(
-                                          Icons.delete,
-                                          color: Colours.whiteColor,
-                                        ),
-                                        onTap: (_) =>
-                                            deleteProductTarget(targets[index]),
+      body: Center(
+        child: BlocConsumer<ProductBloc, ProductState>(
+          listener: (context, state) {
+            if (state.status == ProductStatus.error) {
+              ScaffoldMessenger.of(context).hideCurrentSnackBar();
+              ScaffoldMessenger.of(context)
+                  .showSnackBar(SnackBar(content: Text(state.errorMessage)));
+            }
+          },
+          builder: (context, state) {
+            switch (state.status) {
+              case ProductStatus.initial:
+                return const SizedBox();
+              case ProductStatus.loading:
+                return const CupertinoActivityIndicator();
+              case ProductStatus.error:
+                return Text(state.errorMessage);
+              case ProductStatus.success:
+                final targets = state.targets;
+                return targets.isEmpty
+                    ? Wrap(
+                        direction: Axis.vertical,
+                        crossAxisAlignment: WrapCrossAlignment.center,
+                        spacing: Sizes.p16.h,
+                        children: [
+                          Lottie.asset(
+                            'assets/json/empty.json',
+                            width: 0.9.sw,
+                          ),
+                          Text(
+                            'Targets are empty, try adding them',
+                            style: context.labelLarge,
+                          ),
+                        ],
+                      )
+                    : AnimationLimiter(
+                        child: ListView.separated(
+                          key: listViewKey,
+                          itemCount: targets.length,
+                          separatorBuilder: (context, index) => const Divider(),
+                          itemBuilder: (context, index) =>
+                              AnimationConfiguration.staggeredList(
+                            position: index,
+                            duration: const Duration(milliseconds: 375),
+                            child: SlideAnimation(
+                              verticalOffset: 50,
+                              child: FadeInAnimation(
+                                child: SwipeActionCell(
+                                  key: ObjectKey(targets[index]),
+                                  trailingActions: <SwipeAction>[
+                                    SwipeAction(
+                                      backgroundRadius: 15,
+                                      icon: const Icon(
+                                        Icons.delete,
+                                        color: Colours.whiteColor,
                                       ),
-                                      SwipeAction(
-                                        backgroundRadius: 15,
-                                        color: Colors.orange,
-                                        icon: const Icon(
-                                          Icons.edit,
-                                          color: Colours.whiteColor,
-                                        ),
-                                        onTap: (value) {},
+                                      onTap: (_) =>
+                                          deleteProductTarget(targets[index]),
+                                    ),
+                                    SwipeAction(
+                                      backgroundRadius: 15,
+                                      color: Colors.orange,
+                                      icon: const Icon(
+                                        Icons.edit,
+                                        color: Colours.whiteColor,
                                       ),
-                                    ],
-                                    child: TargetTile(target: targets[index]),
+                                      onTap: (value) {},
+                                    ),
+                                  ],
+                                  child: TargetTile(
+                                    target: targets[index],
+                                    changeStatusTarget: changeStatus,
                                   ),
                                 ),
                               ),
                             ),
                           ),
-                        );
-              }
-            },
-          ),
+                        ),
+                      );
+            }
+          },
         ),
       ),
     );

@@ -23,5 +23,28 @@ class Target extends Equatable {
   final DateTime endDate;
 
   @override
-  List<String?> get props => [id];
+  List<Object?> get props =>
+      [id, name, category, weight, status, type, startDate, endDate];
+
+  Target copyWith({
+    String? id,
+    String? name,
+    Category? category,
+    int? weight,
+    Status? status,
+    TargetType? type,
+    DateTime? startDate,
+    DateTime? endDate,
+  }) {
+    return Target(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      category: category ?? this.category,
+      weight: weight ?? this.weight,
+      status: status ?? this.status,
+      type: type ?? this.type,
+      startDate: startDate ?? this.startDate,
+      endDate: endDate ?? this.endDate,
+    );
+  }
 }
