@@ -1,5 +1,6 @@
 import 'package:business/core/res/colours.dart';
 import 'package:business/presentation/pages/business/business_page.dart';
+import 'package:business/presentation/pages/marketing/marketing_page.dart';
 import 'package:business/presentation/pages/product/product_page.dart';
 import 'package:flutter/material.dart';
 
@@ -42,7 +43,7 @@ class _MainPageState extends State<MainPage> {
           children: [
             ProductPage(),
             BusinessPage(),
-            Text('data3'),
+            MarketingPage(),
           ],
         ),
       ),
