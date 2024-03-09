@@ -1,5 +1,6 @@
 import 'package:business/core/res/theme.dart';
 import 'package:business/core/services/dependency_container.dart';
+import 'package:business/presentation/blocs/business/bloc/business_bloc.dart';
 import 'package:business/presentation/blocs/product/bloc/product_bloc.dart';
 import 'package:business/presentation/pages/main/main_page.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +22,10 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider(
           create: (_) => sl<ProductBloc>()..add(const GetProductTargetEvent()),
+        ),
+        BlocProvider(
+          create: (_) =>
+              sl<BusinessBloc>()..add(const GetBusinessTargetEvent()),
         ),
       ],
       child: GestureDetector(
