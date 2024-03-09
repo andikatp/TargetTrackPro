@@ -1,5 +1,6 @@
 import 'package:business/core/res/theme.dart';
 import 'package:business/core/services/dependency_container.dart';
+import 'package:business/presentation/blocs/auth/bloc/auth_bloc.dart';
 import 'package:business/presentation/blocs/business/bloc/business_bloc.dart';
 import 'package:business/presentation/blocs/marketing/bloc/marketing_bloc.dart';
 import 'package:business/presentation/blocs/product/bloc/product_bloc.dart';
@@ -31,6 +32,9 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (_) =>
               sl<MarketingBloc>()..add(const GetMarketingTargetEvent()),
+        ),
+        BlocProvider(
+          create: (_) => sl<AuthBloc>(),
         ),
       ],
       child: GestureDetector(

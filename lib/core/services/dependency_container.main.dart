@@ -68,3 +68,21 @@ Future<void> marketingInit() async {
       () => MarketingRepositoriesImpl(database: sl()),
     );
 }
+
+Future<void> authInit() async {
+  final userDatabase =
+      await $FloorAppDatabase.databaseBuilder('app_database.db').build();
+  await GetIt.instance.isReady<SharedPreferences>();
+  sl
+    ..registerFactory(() => AuthBloc(login: sl(), register: sl()))
+    ..registerLazySingleton(() => Login(repository: sl()))
+    ..registerLazySingleton(() => Register(repository: sl()))
+    ..registerLazySingleton<AuthRepository>(
+      () => AuthRepositoryImpl(dataSource: sl()),
+    )
+    ..registerLazySingleton<AuthLocalDataSource>(
+      () => AuthLocalDataSourceImpl(preference: sl(), database: sl()),
+    )
+    ..registerLazySingletonAsync(SharedPreferences.getInstance)
+    ..registerSingleton<AppDatabase>(userDatabase);
+}
