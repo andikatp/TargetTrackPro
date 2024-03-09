@@ -3,9 +3,23 @@ part of 'dependency_container.dart';
 final sl = GetIt.instance;
 
 Future<void> init() async {
+  await initSplash();
   await productInit();
   await businessInit();
   await marketingInit();
+}
+
+Future<void> initSplash() async {
+  sl
+    ..registerFactory(() => SplashCubit(repository: sl()))
+    ..registerLazySingleton<SplashRepository>(
+      () => SplashRepositoryImpl(localDataSource: sl()),
+    )
+    ..registerLazySingleton<SplashLocalDataSource>(
+      () => SplashLocalDataSourceImpl(preference: sl()),
+    )
+    ..registerLazySingletonAsync(SharedPreferences.getInstance);
+  await GetIt.instance.isReady<SharedPreferences>();
 }
 
 Future<void> productInit() async {
@@ -72,7 +86,7 @@ Future<void> marketingInit() async {
 Future<void> authInit() async {
   final userDatabase =
       await $FloorAppDatabase.databaseBuilder('app_database.db').build();
-  await GetIt.instance.isReady<SharedPreferences>();
+
   sl
     ..registerFactory(() => AuthBloc(login: sl(), register: sl()))
     ..registerLazySingleton(() => Login(repository: sl()))
@@ -83,6 +97,5 @@ Future<void> authInit() async {
     ..registerLazySingleton<AuthLocalDataSource>(
       () => AuthLocalDataSourceImpl(preference: sl(), database: sl()),
     )
-    ..registerLazySingletonAsync(SharedPreferences.getInstance)
     ..registerSingleton<AppDatabase>(userDatabase);
 }

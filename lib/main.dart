@@ -4,6 +4,7 @@ import 'package:business/presentation/blocs/auth/bloc/auth_bloc.dart';
 import 'package:business/presentation/blocs/business/bloc/business_bloc.dart';
 import 'package:business/presentation/blocs/marketing/bloc/marketing_bloc.dart';
 import 'package:business/presentation/blocs/product/bloc/product_bloc.dart';
+import 'package:business/presentation/blocs/splash/cubit/splash_cubit.dart';
 import 'package:business/presentation/pages/splash/splash_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -22,6 +23,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
+        BlocProvider(
+          create: (_) => sl<SplashCubit>(),
+        ),
         BlocProvider(
           create: (_) => sl<ProductBloc>()..add(const GetProductTargetEvent()),
         ),
