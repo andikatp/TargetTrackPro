@@ -10,9 +10,9 @@ class AddTargetPage extends StatefulWidget {
   const AddTargetPage({required this.addTarget, super.key});
 
   final void Function({
-    required TextEditingController nameController,
+    required String name,
     required Category category,
-    required TextEditingController weightController,
+    required int weight,
     required DateTime? startDate,
     required DateTime? endDate,
   }) addTarget;
@@ -59,9 +59,9 @@ class _AddTargetPageState extends State<AddTargetPage> {
         onPressed: () {
           if (formKey.currentState!.validate()) {
             widget.addTarget(
-              nameController: nameController,
+              name: nameController.text.trim(),
               category: category,
-              weightController: weightController,
+              weight: int.parse(weightController.text.trim()),
               startDate: startDate,
               endDate: endDate,
             );

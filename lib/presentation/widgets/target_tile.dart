@@ -20,7 +20,6 @@ class TargetTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    
     void changeStatus(Status? status) {
       final targetChange = target.copyWith(status: status);
       changeStatusTarget(targetChange);

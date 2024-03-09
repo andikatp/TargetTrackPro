@@ -5,7 +5,8 @@ import 'package:business/core/res/colours.dart';
 import 'package:business/core/utils/enums.dart';
 import 'package:business/domain/entities/core/target.dart';
 import 'package:business/presentation/blocs/product/bloc/product_bloc.dart';
-import 'package:business/presentation/pages/product/add_target_page.dart';
+import 'package:business/presentation/pages/core/add_target_page.dart';
+import 'package:business/presentation/pages/core/edit_target_page.dart';
 import 'package:business/presentation/widgets/target_tile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -24,17 +25,17 @@ class ProductPage extends StatelessWidget {
     final Key listViewKey = UniqueKey();
 
     void addTarget({
-      required TextEditingController nameController,
+      required String name,
       required Category category,
-      required TextEditingController weightController,
+      required int weight,
       required DateTime? startDate,
       required DateTime? endDate,
     }) {
       final target = Target(
         id: const Uuid().v4(),
-        name: nameController.text.trim(),
+        name: name,
         category: category,
-        weight: int.parse(weightController.text.trim()),
+        weight: weight,
         status: Status.toDo,
         type: TargetType.product,
         startDate: startDate!,
@@ -43,7 +44,7 @@ class ProductPage extends StatelessWidget {
       context.read<ProductBloc>().add(SaveProductTargetEvent(target: target));
     }
 
-    void changeStatus(Target target) =>
+    void editProduct(Target target) =>
         context.read<ProductBloc>().add(EditProductTargetEvent(target: target));
 
     void deleteProductTarget(Target target) => context.read<ProductBloc>().add(
@@ -125,16 +126,26 @@ class ProductPage extends StatelessWidget {
                                     SwipeAction(
                                       backgroundRadius: 15,
                                       color: Colors.orange,
-                                      icon: const Icon(
-                                        Icons.edit,
-                                        color: Colours.whiteColor,
+                                      icon: OpenContainer(
+                                        closedColor: Colors.transparent,
+                                        closedElevation: 0,
+                                        openBuilder: (context, action) =>
+                                            EditTargetPage(
+                                          editTarget: editProduct,
+                                          target: targets[index],
+                                        ),
+                                        closedBuilder: (context, action) =>
+                                            const Icon(
+                                          Icons.edit,
+                                          color: Colours.whiteColor,
+                                        ),
                                       ),
-                                      onTap: (value) {},
+                                      onTap: (_) {},
                                     ),
                                   ],
                                   child: TargetTile(
                                     target: targets[index],
-                                    changeStatusTarget: changeStatus,
+                                    changeStatusTarget: editProduct,
                                   ),
                                 ),
                               ),
