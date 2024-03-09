@@ -94,7 +94,7 @@ class _AddTargetPageState extends State<AddTargetPage> {
               CustomCategoryPicker(changeCategory: getCategory),
               Gap.h20,
               CustomTextField(
-                labelText: 'Weight',
+                labelText: 'Weight (Kg)',
                 controller: weightController,
                 type: TextInputType.number,
                 icon: Icons.monitor_weight,
