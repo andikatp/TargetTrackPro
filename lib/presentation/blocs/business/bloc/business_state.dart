@@ -28,39 +28,3 @@ class BusinessState extends Equatable {
   @override
   List<Object> get props => [status, targets, errorMessage];
 }
-
-
-// sealed class BusinessState extends Equatable {
-//   const BusinessState();
-
-//   @override
-//   List<Object> get props => [];
-// }
-
-// final class BusinessInitial extends BusinessState {
-//   const BusinessInitial();
-// }
-
-// final class BusinessLoading extends BusinessState {
-//   const BusinessLoading();
-// }
-
-// final class BusinessTargetsLoaded extends BusinessState {
-//   const BusinessTargetsLoaded({required this.targets});
-//   final List<Target> targets;
-
-//   @override
-//   List<Object> get props => [targets];
-// }
-
-// final class BusinessTargetsError extends BusinessState {
-//   const BusinessTargetsError({required this.message});
-//   final String message;
-
-//   @override
-//   List<Object> get props => [message];
-// }
-
-// final class BusinessDone extends BusinessState {
-//   const BusinessDone();
-// }

@@ -35,9 +35,9 @@ Future<void> businessInit() async {
     ..registerFactory(
       () => BusinessBloc(
         getBusinessTargets: sl(),
-        saveBusinessTarget: sl(),
-        editBusinessTarget: sl(),
-        deleteBusinessTarget: sl(),
+        saveBusinessTargets: sl(),
+        editBusinessTargets: sl(),
+        deleteBusinessTargets: sl(),
       ),
     )
     ..registerLazySingleton(() => GetBusinessTargets(repository: sl()))

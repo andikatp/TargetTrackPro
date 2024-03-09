@@ -1,8 +1,8 @@
 import 'package:business/domain/entities/core/target.dart';
-import 'package:business/domain/usecases/Business/delete_Business_target.dart';
-import 'package:business/domain/usecases/Business/edit_Business_target.dart';
-import 'package:business/domain/usecases/Business/get_Business_targets.dart';
-import 'package:business/domain/usecases/Business/save_Business_target.dart';
+import 'package:business/domain/usecases/business/delete_business_target.dart';
+import 'package:business/domain/usecases/business/edit_business_target.dart';
+import 'package:business/domain/usecases/business/get_business_targets.dart';
+import 'package:business/domain/usecases/business/save_business_target.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -12,13 +12,13 @@ part 'business_state.dart';
 class BusinessBloc extends Bloc<BusinessEvent, BusinessState> {
   BusinessBloc({
     required GetBusinessTargets getBusinessTargets,
-    required SaveBusinessTarget saveBusinessTarget,
-    required EditBusinessTarget editBusinessTarget,
-    required DeleteBusinessTarget deleteBusinessTarget,
+    required SaveBusinessTarget saveBusinessTargets,
+    required EditBusinessTarget editBusinessTargets,
+    required DeleteBusinessTarget deleteBusinessTargets,
   })  : _getBusinessTargets = getBusinessTargets,
-        _saveBusinessTarget = saveBusinessTarget,
-        _editBusinessTarget = editBusinessTarget,
-        _deleteBusinessTarget = deleteBusinessTarget,
+        _saveBusinessTarget = saveBusinessTargets,
+        _editBusinessTarget = editBusinessTargets,
+        _deleteBusinessTarget = deleteBusinessTargets,
         super(const BusinessState()) {
     on<BusinessEvent>((event, emit) => emit(state));
     on<GetBusinessTargetEvent>(_getBusinessTargetsHandler);
@@ -45,10 +45,7 @@ class BusinessBloc extends Bloc<BusinessEvent, BusinessState> {
         ),
       ),
       (targets) => emit(
-        state.copyWith(
-          status: BusinessStatus.success,
-          targets: targets,
-        ),
+        state.copyWith(status: BusinessStatus.success, targets: targets),
       ),
     );
   }

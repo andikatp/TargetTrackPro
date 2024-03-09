@@ -19,7 +19,6 @@ import 'package:uuid/uuid.dart';
 
 class BusinessPage extends StatelessWidget {
   const BusinessPage({super.key});
-
   @override
   Widget build(BuildContext context) {
     final Key listViewKey = UniqueKey();
@@ -57,7 +56,6 @@ class BusinessPage extends StatelessWidget {
 
     return Scaffold(
       floatingActionButton: OpenContainer(
-        useRootNavigator: true,
         closedBuilder: (_, action) => FloatingActionButton(
           onPressed: action,
           child: const Icon(Icons.add),

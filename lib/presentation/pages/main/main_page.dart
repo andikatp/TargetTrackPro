@@ -1,4 +1,5 @@
 import 'package:business/core/res/colours.dart';
+import 'package:business/presentation/pages/business/business_page.dart';
 import 'package:business/presentation/pages/product/product_page.dart';
 import 'package:flutter/material.dart';
 
@@ -40,7 +41,7 @@ class _MainPageState extends State<MainPage> {
         body: const TabBarView(
           children: [
             ProductPage(),
-            Text('data2'),
+            BusinessPage(),
             Text('data3'),
           ],
         ),
