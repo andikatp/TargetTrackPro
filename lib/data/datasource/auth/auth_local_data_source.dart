@@ -1,4 +1,6 @@
+import 'package:business/core/errors/exceptions.dart';
 import 'package:business/core/utils/enums.dart';
+import 'package:business/data/datasource/auth/user_database.dart';
 import 'package:business/data/models/core/user_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -14,15 +16,18 @@ abstract class AuthLocalDataSource {
 }
 
 class AuthLocalDataSourceImpl implements AuthLocalDataSource {
-  AuthLocalDataSourceImpl({required SharedPreferences preference})
-      : _preference = preference;
+  AuthLocalDataSourceImpl(
+      {required SharedPreferences preference, required UserDatabase database,})
+      : _preference = preference,
+        _database = database;
 
   final SharedPreferences _preference;
+  final UserDatabase _database;
 
   @override
-  Future<UserModel> login({required String email, required String password}) {
-    // TODO: implement login
-    throw UnimplementedError();
+  Future<UserModel> login(
+      {required String email, required String password,}) async {
+    return UserModel(email: email, password: password, role: UserRole.business);
   }
 
   @override

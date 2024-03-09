@@ -7,5 +7,5 @@ abstract class UserDao {
   Future<void> register(UserModel user);
 
  @Query('SELECT * FROM target WHERE email = :email')
-  Future<void> login(String email);
+  Future<UserModel?> login(String email);
 }

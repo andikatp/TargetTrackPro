@@ -8,21 +8,21 @@ part of 'user_database.dart';
 // **************************************************************************
 
 // ignore: avoid_classes_with_only_static_members
-class $FloorAppDatabase {
+class $FloorUserDatabase {
   /// Creates a database builder for a persistent database.
   /// Once a database is built, you should keep a reference to it and re-use it.
-  static _$AppDatabaseBuilder databaseBuilder(String name) =>
-      _$AppDatabaseBuilder(name);
+  static _$UserDatabaseBuilder databaseBuilder(String name) =>
+      _$UserDatabaseBuilder(name);
 
   /// Creates a database builder for an in memory database.
   /// Information stored in an in memory database disappears when the process is killed.
   /// Once a database is built, you should keep a reference to it and re-use it.
-  static _$AppDatabaseBuilder inMemoryDatabaseBuilder() =>
-      _$AppDatabaseBuilder(null);
+  static _$UserDatabaseBuilder inMemoryDatabaseBuilder() =>
+      _$UserDatabaseBuilder(null);
 }
 
-class _$AppDatabaseBuilder {
-  _$AppDatabaseBuilder(this.name);
+class _$UserDatabaseBuilder {
+  _$UserDatabaseBuilder(this.name);
 
   final String? name;
 
@@ -31,23 +31,23 @@ class _$AppDatabaseBuilder {
   Callback? _callback;
 
   /// Adds migrations to the builder.
-  _$AppDatabaseBuilder addMigrations(List<Migration> migrations) {
+  _$UserDatabaseBuilder addMigrations(List<Migration> migrations) {
     _migrations.addAll(migrations);
     return this;
   }
 
   /// Adds a database [Callback] to the builder.
-  _$AppDatabaseBuilder addCallback(Callback callback) {
+  _$UserDatabaseBuilder addCallback(Callback callback) {
     _callback = callback;
     return this;
   }
 
   /// Creates the database and initializes it.
-  Future<AppDatabase> build() async {
+  Future<UserDatabase> build() async {
     final path = name != null
         ? await sqfliteDatabaseFactory.getDatabasePath(name!)
         : ':memory:';
-    final database = _$AppDatabase();
+    final database = _$UserDatabase();
     database.database = await database.open(
       path,
       _migrations,
@@ -57,8 +57,8 @@ class _$AppDatabaseBuilder {
   }
 }
 
-class _$AppDatabase extends AppDatabase {
-  _$AppDatabase([StreamController<String>? listener]) {
+class _$UserDatabase extends UserDatabase {
+  _$UserDatabase([StreamController<String>? listener]) {
     changeListener = listener ?? StreamController<String>.broadcast();
   }
 
@@ -123,8 +123,12 @@ class _$UserDao extends UserDao {
   final InsertionAdapter<UserModel> _userModelInsertionAdapter;
 
   @override
-  Future<void> login(String email) async {
-    await _queryAdapter.queryNoReturn('SELECT * FROM target WHERE email = ?1',
+  Future<UserModel?> login(String email) async {
+    return _queryAdapter.query('SELECT * FROM target WHERE email = ?1',
+        mapper: (Map<String, Object?> row) => UserModel(
+            email: row['email'] as String,
+            password: row['password'] as String,
+            role: UserRole.values[row['role'] as int]),
         arguments: [email]);
   }
 
