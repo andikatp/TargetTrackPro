@@ -110,7 +110,7 @@ class ProductPage extends StatelessWidget {
                           itemBuilder: (context, index) =>
                               AnimationConfiguration.staggeredList(
                             position: index,
-                            duration: const Duration(milliseconds: 375),
+                            duration: const Duration(milliseconds: 500),
                             child: SlideAnimation(
                               verticalOffset: 50,
                               child: FadeInAnimation(

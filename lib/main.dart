@@ -13,8 +13,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await DependencyContainer.init();
   await NotificationService.init();
-  await init();
+  NotificationService.initializeIsolate();
   runApp(const MyApp());
 }
 
