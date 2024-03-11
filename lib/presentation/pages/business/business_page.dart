@@ -55,7 +55,11 @@ class BusinessPage extends StatelessWidget {
             );
 
     return Scaffold(
-      floatingActionButton: OpenContainer(
+     floatingActionButton: OpenContainer(
+        closedShape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(Sizes.p16).r,
+        ),
+        closedElevation: 5,
         closedBuilder: (_, action) => FloatingActionButton(
           onPressed: action,
           child: const Icon(Icons.add),
