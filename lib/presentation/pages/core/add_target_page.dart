@@ -1,8 +1,8 @@
 import 'package:business/core/constants/app_sizes.dart';
 import 'package:business/core/utils/enums.dart';
-import 'package:business/presentation/widgets/custom_category_picker.dart';
-import 'package:business/presentation/widgets/custom_date_picker.dart';
-import 'package:business/presentation/widgets/custom_textfield.dart';
+import 'package:business/presentation/widgets/core/custom_category_picker.dart';
+import 'package:business/presentation/widgets/core/custom_date_picker.dart';
+import 'package:business/presentation/widgets/core/custom_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 

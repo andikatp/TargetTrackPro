@@ -62,7 +62,7 @@ class DependencyContainer {
       ..registerLazySingleton(() => EditBusinessTarget(repository: sl()))
       ..registerLazySingleton(() => DeleteBusinessTarget(repository: sl()))
       ..registerLazySingleton<BusinessRepository>(
-        () => BusinessRepositoriesImpl(database: sl()),
+        () => BusinessRepositoriesImpl(database: sl(), preferences: sl()),
       );
   }
 

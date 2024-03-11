@@ -36,9 +36,12 @@ class _MainPageState extends State<MainPage> {
             onPressed: () => Navigator.pop(context),
             child: const Text('No'),
           ),
-          const TextButton(
-            onPressed: NotificationService.cancel,
-            child: Text('Yes'),
+          TextButton(
+            onPressed: () => NotificationService.showNotification(
+              body: 'body',
+              payload: 'payload',
+            ),
+            child: const Text('Yes'),
           ),
         ],
       ),

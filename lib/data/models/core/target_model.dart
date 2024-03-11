@@ -1,6 +1,11 @@
+import 'package:business/core/utils/enums.dart';
 import 'package:business/domain/entities/core/target.dart';
 import 'package:floor/floor.dart';
+import 'package:json_annotation/json_annotation.dart';
 
+part 'target_model.g.dart';
+
+@JsonSerializable()
 @Entity(tableName: 'target', primaryKeys: ['id'])
 class TargetModel extends Target {
   const TargetModel({
@@ -26,4 +31,8 @@ class TargetModel extends Target {
       endDate: target.endDate,
     );
   }
+
+  factory TargetModel.fromJson(Map<String, dynamic> json) =>
+      _$TargetModelFromJson(json);
+  Map<String, dynamic> toJson() => _$TargetModelToJson(this);
 }
