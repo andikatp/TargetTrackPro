@@ -26,6 +26,7 @@ class NotificationService {
       iOS: initializationSettingsDarwin,
       linux: initializationSettingsLinux,
     );
+
     await _flutterLocalNotification.initialize(
       initializationSettings,
       onDidReceiveNotificationResponse: (details) {},

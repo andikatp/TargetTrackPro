@@ -31,6 +31,7 @@ import 'package:business/presentation/blocs/business/bloc/business_bloc.dart';
 import 'package:business/presentation/blocs/marketing/bloc/marketing_bloc.dart';
 import 'package:business/presentation/blocs/product/bloc/product_bloc.dart';
 import 'package:business/presentation/blocs/splash/cubit/splash_cubit.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
