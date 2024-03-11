@@ -15,7 +15,7 @@ class SplashLocalDataSourceImpl implements SplashLocalDataSource {
   @override
   Future<bool> checkUserIsLoggedIn() async {
     try {
-      final result = _preference.getString('isLoggedIn');
+      final result = _preference.getBool('isLoggedIn');
       return result != null;
     } catch (e) {
       throw CacheException(message: e.toString());

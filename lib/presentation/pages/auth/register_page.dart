@@ -62,7 +62,8 @@ class _RegisterPageState extends State<RegisterPage> {
       resizeToAvoidBottomInset: true,
       body: SafeArea(
         minimum:
-            REdgeInsets.symmetric(horizontal: Sizes.p36, vertical: Sizes.p48),
+            REdgeInsets.symmetric(horizontal: Sizes.p36, vertical: Sizes.p48)
+                .copyWith(bottom: 0),
         child: Form(
           key: formKey,
           child: BlocConsumer<AuthBloc, AuthState>(
@@ -98,36 +99,38 @@ class _RegisterPageState extends State<RegisterPage> {
                       runSpacing: Sizes.p12,
                       children: [
                         Text('Role', style: context.labelMedium),
-                        DropdownButton2<UserRole>(
-                          value: selectedRole,
-                          buttonStyleData: ButtonStyleData(
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                              border: Border.all(width: 0.5),
-                              borderRadius: BorderRadius.circular(12),
+                        DropdownButtonHideUnderline(
+                          child: DropdownButton2<UserRole>(
+                            value: selectedRole,
+                            buttonStyleData: ButtonStyleData(
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                border: Border.all(width: 0.5),
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              padding: REdgeInsets.symmetric(
+                                horizontal: 12,
+                                vertical: 8,
+                              ),
                             ),
-                            padding: REdgeInsets.symmetric(
-                              horizontal: 12,
-                              vertical: 8,
+                            style: context.titleSmall,
+                            items: UserRole.values
+                                .map(
+                                  (userRole) => DropdownMenuItem<UserRole>(
+                                    value: userRole,
+                                    child: Text(userRole.name),
+                                  ),
+                                )
+                                .toList(),
+                            onChanged: (value) => setState(
+                              () => selectedRole = value!,
                             ),
-                          ),
-                          style: context.titleSmall,
-                          items: UserRole.values
-                              .map(
-                                (userRole) => DropdownMenuItem<UserRole>(
-                                  value: userRole,
-                                  child: Text(userRole.name),
-                                ),
-                              )
-                              .toList(),
-                          onChanged: (value) => setState(
-                            () => selectedRole = value!,
                           ),
                         ),
                       ],
                     ),
                     Gap.h28,
-                    if (state is AuthError)
+                    if (state is AuthRegisterError)
                       Text(
                         state.message,
                         style: context.bodySmall

@@ -47,7 +47,8 @@ class LoginPage extends StatelessWidget {
       resizeToAvoidBottomInset: true,
       body: SafeArea(
         minimum:
-            REdgeInsets.symmetric(horizontal: Sizes.p36, vertical: Sizes.p48),
+            REdgeInsets.symmetric(horizontal: Sizes.p36, vertical: Sizes.p48)
+                .copyWith(bottom: 0),
         child: Form(
           key: formKey,
           child: BlocConsumer<AuthBloc, AuthState>(
@@ -75,7 +76,7 @@ class LoginPage extends StatelessWidget {
                     Gap.h20,
                     PasswordInputField(controller: passwordController),
                     Gap.h28,
-                    if (state is AuthError)
+                    if (state is AuthLoginError)
                       Text(
                         state.message,
                         style: context.bodySmall

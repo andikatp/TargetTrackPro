@@ -27,8 +27,16 @@ final class AuthRegistered extends AuthState {
   const AuthRegistered();
 }
 
-final class AuthError extends AuthState {
-  const AuthError({required this.message});
+final class AuthLoginError extends AuthState {
+  const AuthLoginError({required this.message});
+  final String message;
+
+  @override
+  List<Object> get props => [message];
+}
+
+final class AuthRegisterError extends AuthState {
+  const AuthRegisterError({required this.message});
   final String message;
 
   @override

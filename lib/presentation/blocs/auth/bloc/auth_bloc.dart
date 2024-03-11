@@ -27,7 +27,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     final result =
         await _login(LoginParams(email: event.email, password: event.password));
     result.fold(
-      (failure) => emit(AuthError(message: failure.message)),
+      (failure) => emit(AuthLoginError(message: failure.message)),
       (user) => emit(AuthLoggedIn(user: user)),
     );
   }
@@ -38,7 +38,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   ) async {
     final result = await _register(event.user);
     result.fold(
-      (failure) => emit(AuthError(message: failure.errorMessage)),
+      (failure) => emit(AuthRegisterError(message: failure.errorMessage)),
       (_) => emit(const AuthRegistered()),
     );
   }
