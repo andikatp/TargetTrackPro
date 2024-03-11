@@ -30,7 +30,7 @@ class SplashPage extends StatelessWidget {
                 : Navigator.push(
                     context,
                     MaterialPageRoute<dynamic>(
-                      builder: (context) =>  const LoginPage(),
+                      builder: (context) => const LoginPage(),
                     ),
                   );
           }

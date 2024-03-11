@@ -1,3 +1,4 @@
+import 'package:animations/animations.dart';
 import 'package:business/core/constants/app_sizes.dart';
 import 'package:business/core/res/colours.dart';
 import 'package:business/core/res/fonts.dart';
@@ -57,6 +58,16 @@ class AppTheme {
         foregroundColor: Colours.whiteColor,
         minimumSize: Size.fromHeight(Sizes.p56.h),
       ),
+    ),
+    pageTransitionsTheme: const PageTransitionsTheme(
+      builders: {
+        TargetPlatform.android: SharedAxisPageTransitionsBuilder(
+          transitionType: SharedAxisTransitionType.horizontal,
+        ),
+        TargetPlatform.iOS: SharedAxisPageTransitionsBuilder(
+          transitionType: SharedAxisTransitionType.horizontal,
+        ),
+      },
     ),
   );
 }

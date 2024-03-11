@@ -37,6 +37,8 @@ class AuthLocalDataSourceImpl implements AuthLocalDataSource {
       }
       await _preference.setBool('isLoggedIn', true);
       return user;
+    } on CacheException catch (e) {
+      throw CacheException(message: e.message);
     } catch (e) {
       throw CacheException(message: e.toString());
     }
@@ -52,6 +54,8 @@ class AuthLocalDataSourceImpl implements AuthLocalDataSource {
         );
       }
       await _database.userDao.register(user);
+    } on CacheException catch (e) {
+      throw CacheException(message: e.message);
     } catch (e) {
       throw CacheException(message: e.toString());
     }
