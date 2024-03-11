@@ -11,7 +11,6 @@ class DependencyContainer {
     await _marketingInit();
   }
 
-
   static Future<void> _initSplash() async {
     sl
       ..registerFactory(() => SplashCubit(repository: sl()))
@@ -43,7 +42,7 @@ class DependencyContainer {
       ..registerLazySingleton(() => EditProductTarget(repository: sl()))
       ..registerLazySingleton(() => DeleteProductTarget(repository: sl()))
       ..registerLazySingleton<ProductRepository>(
-        () => ProductRepositoriesImpl(database: sl()),
+        () => ProductRepositoriesImpl(database: sl(), preferences: sl()),
       )
       ..registerSingleton<AppDatabase>(database);
   }
@@ -82,7 +81,7 @@ class DependencyContainer {
       ..registerLazySingleton(() => EditMarketingTarget(repository: sl()))
       ..registerLazySingleton(() => DeleteMarketingTarget(repository: sl()))
       ..registerLazySingleton<MarketingRepository>(
-        () => MarketingRepositoriesImpl(database: sl()),
+        () => MarketingRepositoriesImpl(database: sl(), preferences: sl()),
       );
   }
 

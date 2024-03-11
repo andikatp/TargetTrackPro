@@ -25,6 +25,8 @@ class BusinessRepositoriesImpl implements BusinessRepository {
     try {
       final result = await _database.businessTargetDao
           .deleteBusinessTarget(TargetModel.fromEntity(target));
+      await NotificationService.cancel(target.id.hashCode);
+      await _preferences.remove('target_${target.endDate}');
       return Right(result);
     } catch (e) {
       return Left(CacheFailure(message: e.toString()));
@@ -36,14 +38,12 @@ class BusinessRepositoriesImpl implements BusinessRepository {
     try {
       final result = await _database.businessTargetDao
           .editBusinessTarget(TargetModel.fromEntity(target));
+      final key = 'target_${target.endDate}';
+      await _preferences.setString(key, target.name);
       await AndroidAlarmManager.oneShotAt(
         target.endDate.subtract(const Duration(days: 1)),
-        1,
-        () => NotificationService.showNotification(
-          body: "🎯 Don't forget! ${target.name} is waiting "
-              'to be finished by tomorrow!',
-          payload: '',
-        ),
+        target.id.hashCode,
+        NotificationService.callback,
         exact: true,
         wakeup: true,
       );
@@ -68,12 +68,11 @@ class BusinessRepositoriesImpl implements BusinessRepository {
     try {
       final result = await _database.businessTargetDao
           .saveBusinessTarget(TargetModel.fromEntity(target));
-      final uniqueId = '${target.id}_${DateTime.now().millisecondsSinceEpoch}';
-      await _preferences.setString('target_name', target.name);
-      print(target.name);
+      final key = 'target_${target.endDate}';
+      await _preferences.setString(key, target.name);
       await AndroidAlarmManager.oneShotAt(
-        DateTime.now().add(const Duration(seconds: 10)),
-        uniqueId.hashCode,
+        target.endDate.subtract(const Duration(days: 1)),
+        target.id.hashCode,
         NotificationService.callback,
         exact: true,
         wakeup: true,

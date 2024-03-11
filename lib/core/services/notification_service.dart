@@ -66,13 +66,24 @@ class NotificationService {
   static Future<void> callback() async {
     final sp = await SharedPreferences.getInstance();
     await sp.reload();
-    final target = sp.getString('target_name');
-    await NotificationService.showNotification(
-      body: "🎯 Don't forget! $target is waiting "
-          'to be finished by tomorrow!',
-      payload: '',
-    );
+    final targetKeys = sp.getKeys().where((key) => key.startsWith('target_'));
+    final currentDate = DateTime.now();
+    for (final key in targetKeys) {
+      final endDate = DateTime.parse(key.split('_')[1]);
+      if (endDate.difference(currentDate).inDays <= 1) {
+        final targetName = sp.getString(key);
+        await NotificationService.showNotification(
+          body: "🎯 Don't forget! $targetName is waiting "
+              'to be finished by tomorrow!',
+          payload: '',
+        );
+        await sp.remove(key);
+      }
+    }
     _uiSendPort ??= IsolateNameServer.lookupPortByName(_isolateName);
     _uiSendPort?.send(null);
   }
+
+  static Future<void> cancel(int id) async =>
+      _flutterLocalNotification.cancel(id);
 }
