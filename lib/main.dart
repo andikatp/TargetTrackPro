@@ -1,3 +1,4 @@
+import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
 import 'package:business/core/res/theme.dart';
 import 'package:business/core/services/dependency_container.dart';
 import 'package:business/core/services/notification_service.dart';
@@ -15,6 +16,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await DependencyContainer.init();
   await NotificationService.init();
+  await AndroidAlarmManager.initialize();
   NotificationService.initializeIsolate();
   runApp(const MyApp());
 }

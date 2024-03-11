@@ -7,7 +7,7 @@ import 'package:business/domain/entities/core/target.dart';
 import 'package:business/presentation/blocs/product/bloc/product_bloc.dart';
 import 'package:business/presentation/pages/core/add_target_page.dart';
 import 'package:business/presentation/pages/core/edit_target_page.dart';
-import 'package:business/presentation/widgets/target_tile.dart';
+import 'package:business/presentation/widgets/core/target_tile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

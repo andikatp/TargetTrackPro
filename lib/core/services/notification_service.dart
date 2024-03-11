@@ -1,7 +1,7 @@
 import 'dart:isolate';
 import 'dart:ui';
-
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class NotificationService {
   const NotificationService._();
@@ -31,8 +31,6 @@ class NotificationService {
       initializationSettings,
       onDidReceiveNotificationResponse: (details) {},
     );
-    _uiSendPort ??= IsolateNameServer.lookupPortByName(_isolateName);
-    _uiSendPort?.send(null);
   }
 
   static void initializeIsolate() {
@@ -64,29 +62,17 @@ class NotificationService {
     );
   }
 
-  static Future<void> showPeriodicNotification({
-    required String body,
-    required String payload,
-  }) async {
-    const androidNotificationDetails = AndroidNotificationDetails(
-      '2',
-      'channelName',
-      importance: Importance.max,
-      priority: Priority.high,
-      ticker: 'ticker',
+  @pragma('vm:entry-point')
+  static Future<void> callback() async {
+    final sp = await SharedPreferences.getInstance();
+    await sp.reload();
+    final target = sp.getString('target_name');
+    await NotificationService.showNotification(
+      body: "🎯 Don't forget! $target is waiting "
+          'to be finished by tomorrow!',
+      payload: '',
     );
-    const notificationDetails =
-        NotificationDetails(android: androidNotificationDetails);
-    await _flutterLocalNotification.periodicallyShow(
-      1,
-      'title',
-      body,
-      RepeatInterval.everyMinute,
-      notificationDetails,
-    );
-  }
-
-  static Future<void> cancel() async {
-    await _flutterLocalNotification.cancelAll();
+    _uiSendPort ??= IsolateNameServer.lookupPortByName(_isolateName);
+    _uiSendPort?.send(null);
   }
 }
