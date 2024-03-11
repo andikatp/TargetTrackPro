@@ -2,102 +2,104 @@ part of 'dependency_container.dart';
 
 final sl = GetIt.instance;
 
-Future<void> init() async {
-  await initSplash();
-  await initAuth();
-  await productInit();
-  await businessInit();
-  await marketingInit();
-}
+class DependencyContainer {
+  static Future<void> init() async {
+    await _initSplash();
+    await _initAuth();
+    await _productInit();
+    await _businessInit();
+    await _marketingInit();
+  }
 
-Future<void> initSplash() async {
-  sl
-    ..registerFactory(() => SplashCubit(repository: sl()))
-    ..registerLazySingleton<SplashRepository>(
-      () => SplashRepositoryImpl(localDataSource: sl()),
-    )
-    ..registerLazySingleton<SplashLocalDataSource>(
-      () => SplashLocalDataSourceImpl(preference: sl()),
-    )
-    ..registerLazySingletonAsync(SharedPreferences.getInstance)
-    ..registerLazySingleton(FlutterLocalNotificationsPlugin.new);
-  await GetIt.instance.isReady<SharedPreferences>();
-}
 
-Future<void> productInit() async {
-  final database =
-      await $FloorAppDatabase.databaseBuilder('app_database.db').build();
+  static Future<void> _initSplash() async {
+    sl
+      ..registerFactory(() => SplashCubit(repository: sl()))
+      ..registerLazySingleton<SplashRepository>(
+        () => SplashRepositoryImpl(localDataSource: sl()),
+      )
+      ..registerLazySingleton<SplashLocalDataSource>(
+        () => SplashLocalDataSourceImpl(preference: sl()),
+      )
+      ..registerLazySingletonAsync(SharedPreferences.getInstance);
+    await GetIt.instance.isReady<SharedPreferences>();
+  }
 
-  sl
-    ..registerFactory(
-      () => ProductBloc(
-        getProductTargets: sl(),
-        saveProductTarget: sl(),
-        editProductTarget: sl(),
-        deleteProductTarget: sl(),
-      ),
-    )
-    ..registerLazySingleton(() => GetProductTargets(repository: sl()))
-    ..registerLazySingleton(() => SaveProductTarget(repository: sl()))
-    ..registerLazySingleton(() => EditProductTarget(repository: sl()))
-    ..registerLazySingleton(() => DeleteProductTarget(repository: sl()))
-    ..registerLazySingleton<ProductRepository>(
-      () => ProductRepositoriesImpl(database: sl()),
-    )
-    ..registerSingleton<AppDatabase>(database);
-}
+  static Future<void> _productInit() async {
+    final database =
+        await $FloorAppDatabase.databaseBuilder('app_database.db').build();
 
-Future<void> businessInit() async {
-  sl
-    ..registerFactory(
-      () => BusinessBloc(
-        getBusinessTargets: sl(),
-        saveBusinessTarget: sl(),
-        editBusinessTarget: sl(),
-        deleteBusinessTarget: sl(),
-      ),
-    )
-    ..registerLazySingleton(() => GetBusinessTargets(repository: sl()))
-    ..registerLazySingleton(() => SaveBusinessTarget(repository: sl()))
-    ..registerLazySingleton(() => EditBusinessTarget(repository: sl()))
-    ..registerLazySingleton(() => DeleteBusinessTarget(repository: sl()))
-    ..registerLazySingleton<BusinessRepository>(
-      () => BusinessRepositoriesImpl(database: sl()),
-    );
-}
+    sl
+      ..registerFactory(
+        () => ProductBloc(
+          getProductTargets: sl(),
+          saveProductTarget: sl(),
+          editProductTarget: sl(),
+          deleteProductTarget: sl(),
+        ),
+      )
+      ..registerLazySingleton(() => GetProductTargets(repository: sl()))
+      ..registerLazySingleton(() => SaveProductTarget(repository: sl()))
+      ..registerLazySingleton(() => EditProductTarget(repository: sl()))
+      ..registerLazySingleton(() => DeleteProductTarget(repository: sl()))
+      ..registerLazySingleton<ProductRepository>(
+        () => ProductRepositoriesImpl(database: sl()),
+      )
+      ..registerSingleton<AppDatabase>(database);
+  }
 
-Future<void> marketingInit() async {
-  sl
-    ..registerFactory(
-      () => MarketingBloc(
-        getMarketingTargets: sl(),
-        saveMarketingTarget: sl(),
-        editMarketingTarget: sl(),
-        deleteMarketingTarget: sl(),
-      ),
-    )
-    ..registerLazySingleton(() => GetMarketingTargets(repository: sl()))
-    ..registerLazySingleton(() => SaveMarketingTarget(repository: sl()))
-    ..registerLazySingleton(() => EditMarketingTarget(repository: sl()))
-    ..registerLazySingleton(() => DeleteMarketingTarget(repository: sl()))
-    ..registerLazySingleton<MarketingRepository>(
-      () => MarketingRepositoriesImpl(database: sl()),
-    );
-}
+  static Future<void> _businessInit() async {
+    sl
+      ..registerFactory(
+        () => BusinessBloc(
+          getBusinessTargets: sl(),
+          saveBusinessTarget: sl(),
+          editBusinessTarget: sl(),
+          deleteBusinessTarget: sl(),
+        ),
+      )
+      ..registerLazySingleton(() => GetBusinessTargets(repository: sl()))
+      ..registerLazySingleton(() => SaveBusinessTarget(repository: sl()))
+      ..registerLazySingleton(() => EditBusinessTarget(repository: sl()))
+      ..registerLazySingleton(() => DeleteBusinessTarget(repository: sl()))
+      ..registerLazySingleton<BusinessRepository>(
+        () => BusinessRepositoriesImpl(database: sl()),
+      );
+  }
 
-Future<void> initAuth() async {
-  final userDatabase =
-      await $FloorUserDatabase.databaseBuilder('user_database.db').build();
+  static Future<void> _marketingInit() async {
+    sl
+      ..registerFactory(
+        () => MarketingBloc(
+          getMarketingTargets: sl(),
+          saveMarketingTarget: sl(),
+          editMarketingTarget: sl(),
+          deleteMarketingTarget: sl(),
+        ),
+      )
+      ..registerLazySingleton(() => GetMarketingTargets(repository: sl()))
+      ..registerLazySingleton(() => SaveMarketingTarget(repository: sl()))
+      ..registerLazySingleton(() => EditMarketingTarget(repository: sl()))
+      ..registerLazySingleton(() => DeleteMarketingTarget(repository: sl()))
+      ..registerLazySingleton<MarketingRepository>(
+        () => MarketingRepositoriesImpl(database: sl()),
+      );
+  }
 
-  sl
-    ..registerFactory(() => AuthBloc(login: sl(), register: sl()))
-    ..registerLazySingleton(() => Login(repository: sl()))
-    ..registerLazySingleton(() => Register(repository: sl()))
-    ..registerLazySingleton<AuthRepository>(
-      () => AuthRepositoryImpl(dataSource: sl()),
-    )
-    ..registerLazySingleton<AuthLocalDataSource>(
-      () => AuthLocalDataSourceImpl(preference: sl(), database: sl()),
-    )
-    ..registerSingleton<UserDatabase>(userDatabase);
+  static Future<void> _initAuth() async {
+    final userDatabase =
+        await $FloorUserDatabase.databaseBuilder('user_database.db').build();
+
+    sl
+      ..registerFactory(() => AuthBloc(login: sl(), register: sl()))
+      ..registerLazySingleton(() => Login(repository: sl()))
+      ..registerLazySingleton(() => Register(repository: sl()))
+      ..registerLazySingleton<AuthRepository>(
+        () => AuthRepositoryImpl(dataSource: sl()),
+      )
+      ..registerLazySingleton<AuthLocalDataSource>(
+        () => AuthLocalDataSourceImpl(preference: sl(), database: sl()),
+      )
+      ..registerSingleton<UserDatabase>(userDatabase);
+  }
 }

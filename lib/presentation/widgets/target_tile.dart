@@ -36,9 +36,17 @@ class TargetTile extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  '${target.name} (${target.weight} Kg)',
-                  style: context.labelLarge,
+                SizedBox(
+                  width: 0.6.sw,
+                  child: Text(
+                    '${target.name} (${target.weight} Kg)',
+                    style: context.labelLarge.copyWith(
+                      decoration: target.status.name == 'done'
+                          ? TextDecoration.lineThrough
+                          : TextDecoration.none,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
                 ),
                 Text(
                   target.category.name,
@@ -51,23 +59,43 @@ class TargetTile extends StatelessWidget {
                 ),
               ],
             ),
-            DropdownButton2<Status>(
-              value: target.status,
-              customButton: Text(
-                target.status.name,
-                style: const TextStyle(color: Colors.red),
+            DropdownButtonHideUnderline(
+              child: DropdownButton2<Status>(
+                value: target.status,
+                customButton: Text(
+                  target.status.name.split('').map((char) {
+                    if (char == target.status.name[0]) {
+                      return char.toUpperCase();
+                    }
+                    if (char == char.toUpperCase()) {
+                      return ' $char';
+                    }
+                    return char;
+                  }).join(),
+                  style: const TextStyle(color: Colors.red),
+                ),
+                dropdownStyleData: const DropdownStyleData(width: 160),
+                style: context.titleSmall,
+                items: Status.values
+                    .map(
+                      (status) => DropdownMenuItem<Status>(
+                        value: status,
+                        child: Text(
+                          status.name.split('').map((char) {
+                            if (char == status.name[0]) {
+                              return char.toUpperCase();
+                            }
+                            if (char == char.toUpperCase()) {
+                              return ' $char';
+                            }
+                            return char;
+                          }).join(),
+                        ),
+                      ),
+                    )
+                    .toList(),
+                onChanged: changeStatus,
               ),
-              dropdownStyleData: const DropdownStyleData(width: 160),
-              style: context.titleSmall,
-              items: Status.values
-                  .map(
-                    (status) => DropdownMenuItem<Status>(
-                      value: status,
-                      child: Text(status.name),
-                    ),
-                  )
-                  .toList(),
-              onChanged: changeStatus,
             ),
           ],
         ),

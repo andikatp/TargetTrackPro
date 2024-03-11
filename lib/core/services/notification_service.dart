@@ -1,7 +1,18 @@
-import 'package:business/core/services/dependency_container.dart';
+import 'dart:isolate';
+import 'dart:ui';
+
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 class NotificationService {
+  const NotificationService._();
+
+  static const String _isolateName = 'isolate';
+  static SendPort? _uiSendPort;
+
+  static final ReceivePort _port = ReceivePort();
+  static final FlutterLocalNotificationsPlugin _flutterLocalNotification =
+      FlutterLocalNotificationsPlugin();
+
   static Future<void> init() async {
     const initializationSettingsAndroid =
         AndroidInitializationSettings('@mipmap/ic_launcher');
@@ -15,9 +26,19 @@ class NotificationService {
       iOS: initializationSettingsDarwin,
       linux: initializationSettingsLinux,
     );
-    await sl<FlutterLocalNotificationsPlugin>().initialize(
+
+    await _flutterLocalNotification.initialize(
       initializationSettings,
       onDidReceiveNotificationResponse: (details) {},
+    );
+    _uiSendPort ??= IsolateNameServer.lookupPortByName(_isolateName);
+    _uiSendPort?.send(null);
+  }
+
+  static void initializeIsolate() {
+    IsolateNameServer.registerPortWithName(
+      _port.sendPort,
+      _isolateName,
     );
   }
 
@@ -26,21 +47,46 @@ class NotificationService {
     required String payload,
   }) async {
     const androidNotificationDetails = AndroidNotificationDetails(
-      'your channel id',
-      'your channel name',
-      channelDescription: 'your channel description',
+      'channelId',
+      'channelName',
       importance: Importance.max,
       priority: Priority.high,
       ticker: 'ticker',
     );
     const notificationDetails =
         NotificationDetails(android: androidNotificationDetails);
-    await sl<FlutterLocalNotificationsPlugin>().show(
+    await _flutterLocalNotification.show(
       0,
       'Work on your target!',
       body,
       notificationDetails,
       payload: payload,
     );
+  }
+
+  static Future<void> showPeriodicNotification({
+    required String body,
+    required String payload,
+  }) async {
+    const androidNotificationDetails = AndroidNotificationDetails(
+      '2',
+      'channelName',
+      importance: Importance.max,
+      priority: Priority.high,
+      ticker: 'ticker',
+    );
+    const notificationDetails =
+        NotificationDetails(android: androidNotificationDetails);
+    await _flutterLocalNotification.periodicallyShow(
+      1,
+      'title',
+      body,
+      RepeatInterval.everyMinute,
+      notificationDetails,
+    );
+  }
+
+  static Future<void> cancel() async {
+    await _flutterLocalNotification.cancelAll();
   }
 }

@@ -4,9 +4,7 @@ import 'package:business/core/services/notification_service.dart';
 import 'package:business/presentation/pages/business/business_page.dart';
 import 'package:business/presentation/pages/marketing/marketing_page.dart';
 import 'package:business/presentation/pages/product/product_page.dart';
-import 'package:business/presentation/pages/splash/splash_page.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -34,13 +32,14 @@ class _MainPageState extends State<MainPage> {
         surfaceTintColor: Colours.whiteColor,
         content: const Text(' are you sure you want to log out?'),
         actions: [
-          TextButton(onPressed: () {}, child: const Text('No')),
           TextButton(
-              onPressed: () {
-                NotificationService.showNotification(
-                    body: 'Target A', payload: '',);
-              },
-              child: const Text('Yes'),),
+            onPressed: () => Navigator.pop(context),
+            child: const Text('No'),
+          ),
+          const TextButton(
+            onPressed: NotificationService.cancel,
+            child: Text('Yes'),
+          ),
         ],
       ),
     );
