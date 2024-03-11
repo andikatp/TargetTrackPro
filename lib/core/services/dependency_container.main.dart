@@ -11,6 +11,7 @@ class DependencyContainer {
     await _marketingInit();
   }
 
+
   static Future<void> _initSplash() async {
     sl
       ..registerFactory(() => SplashCubit(repository: sl()))

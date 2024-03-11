@@ -1,16 +1,42 @@
 # business
 [![Dart](https://github.com/andikatp/story/actions/workflows/dart.yml/badge.svg)](https://github.com/andikatp/story/actions/workflows/dart.yml)
-A new Flutter project.
+[![style: very good analysis](https://img.shields.io/badge/style-very_good_analysis-B22C89.svg)](https://pub.dev/packages/very_good_analysis)
 
-## Getting Started
+## Screenshot
+<table >
+  <tr >
+    <td align="center"><img src="https://github.com/andikatp/TargetTrackPro/blob/main/screenshot/1.png" height="500" /></td>
+    <td align="center"><img src="https://github.com/andikatp/TargetTrackPro/blob/main/screenshot/2.png" height="500" /></td>
+    <td align="center"><img src="https://github.com/andikatp/TargetTrackPro/blob/main/screenshot/3.png" height="500" /></td>
+  </tr>
+  <tr>
+    <td align="center"><img src="https://github.com/andikatp/TargetTrackPro/blob/main/screenshot/4.png" height="500" /></td>
+    <td align="center"><img src="https://github.com/andikatp/TargetTrackPro/blob/main/screenshot/5.png" height="500" /></td>
+    <td align="center"><img src="https://github.com/andikatp/TargetTrackPro/blob/main/screenshot/6.png" height="500" /></td>
+  </tr>
+</table>
 
-This project is a starting point for a Flutter application.
+## Detail
+ - Clean Architecture
+ - Flutter Bloc (Easy Testing)
+ - Minus (A Lot ngl)
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Tech
+- animations
+- cupertino_icons
+- custom_date_range_picker
+- dartz
+- dropdown_button2
+- equatable
+- floor
+- flutter_bloc
+- flutter_screenutil
+- flutter_staggered_animations
+- flutter_swipe_action_cell
+- get_it
+- intl
+- lottie
+- shared_preferences
+- sqflite
+- uuid
+- very_good_analysis
