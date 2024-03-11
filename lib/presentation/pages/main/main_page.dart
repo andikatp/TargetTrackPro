@@ -1,4 +1,6 @@
+import 'package:animations/animations.dart';
 import 'package:business/core/res/colours.dart';
+import 'package:business/core/services/notification_service.dart';
 import 'package:business/presentation/pages/business/business_page.dart';
 import 'package:business/presentation/pages/marketing/marketing_page.dart';
 import 'package:business/presentation/pages/product/product_page.dart';
@@ -14,6 +16,36 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
+  Future<void> logout() async {
+    // final sharedPreferences = await SharedPreferences.getInstance();
+    // await sharedPreferences.remove('isLoggedIn');
+    // if (context.mounted) {
+    //   await Navigator.pushReplacement(
+    //     context,
+    //     MaterialPageRoute<dynamic>(
+    //       builder: (context) => const SplashPage(),
+    //     ),
+    //   );
+    // }
+    await showModal<AlertDialog>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Confirm Logout'),
+        surfaceTintColor: Colours.whiteColor,
+        content: const Text(' are you sure you want to log out?'),
+        actions: [
+          TextButton(onPressed: () {}, child: const Text('No')),
+          TextButton(
+              onPressed: () {
+                NotificationService.showNotification(
+                    body: 'Target A', payload: '',);
+              },
+              child: const Text('Yes'),),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -22,24 +54,14 @@ class _MainPageState extends State<MainPage> {
         appBar: AppBar(
           title: const Text('TargetTrackPro'),
           centerTitle: false,
+          leadingWidth: 0,
           actions: [
             IconButton(
               icon: const Icon(
-                Icons.person,
+                Icons.logout,
                 color: Colours.whiteColor,
               ),
-              onPressed: () async {
-                final sharedPreferences = await SharedPreferences.getInstance();
-                await sharedPreferences.remove('isLoggedIn');
-                if (context.mounted) {
-                  await Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute<dynamic>(
-                      builder: (context) => const SplashPage(),
-                    ),
-                  );
-                }
-              },
+              onPressed: logout,
             ),
           ],
           bottom: TabBar(

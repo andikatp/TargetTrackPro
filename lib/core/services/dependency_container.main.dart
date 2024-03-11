@@ -19,7 +19,8 @@ Future<void> initSplash() async {
     ..registerLazySingleton<SplashLocalDataSource>(
       () => SplashLocalDataSourceImpl(preference: sl()),
     )
-    ..registerLazySingletonAsync(SharedPreferences.getInstance);
+    ..registerLazySingletonAsync(SharedPreferences.getInstance)
+    ..registerLazySingleton(FlutterLocalNotificationsPlugin.new);
   await GetIt.instance.isReady<SharedPreferences>();
 }
 
