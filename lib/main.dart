@@ -18,7 +18,6 @@ Future<void> main() async {
   await DependencyContainer.init();
   await NotificationService.init();
   await AndroidAlarmManager.initialize();
-  NotificationService.initializeIsolate();
   runApp(const MyApp());
 }
 
