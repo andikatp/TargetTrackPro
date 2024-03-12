@@ -2,7 +2,7 @@ import 'package:business/data/datasource/auth/auth_local_data_source.dart';
 import 'package:business/data/datasource/auth/user_database.dart';
 import 'package:business/data/datasource/core/app_database.dart';
 import 'package:business/data/datasource/splash/splash_local_datasource.dart';
-import 'package:business/data/repositories/auth/auth_repository.dart';
+import 'package:business/data/repositories/auth/auth_repository_impl.dart';
 import 'package:business/data/repositories/business/business_repositories_impl.dart';
 import 'package:business/data/repositories/marketing/marketing_repositories_impl.dart';
 import 'package:business/data/repositories/product/product_repositories_impl.dart';
