@@ -6,6 +6,7 @@ class DependencyContainer {
   static Future<void> init() async {
     await _initSplash();
     await _initAuth();
+    await _initMain();
     await _productInit();
     await _businessInit();
     await _marketingInit();
@@ -100,5 +101,17 @@ class DependencyContainer {
         () => AuthLocalDataSourceImpl(preference: sl(), database: sl()),
       )
       ..registerSingleton<UserDatabase>(userDatabase);
+  }
+
+  static Future<void> _initMain() async {
+    sl
+      ..registerFactory(() => MainCubit(logOut: sl()))
+      ..registerLazySingleton(() => LogOut(repository: sl()))
+      ..registerLazySingleton<MainRepository>(
+        () => MainRepositoryImpl(dataSource: sl()),
+      )
+      ..registerLazySingleton<MainLocalDataSource>(
+        () => MainLocalDataSourceImpl(preferences: sl()),
+      );
   }
 }
