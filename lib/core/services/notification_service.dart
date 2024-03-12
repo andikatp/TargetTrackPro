@@ -86,4 +86,7 @@ class NotificationService {
 
   static Future<void> cancel(int id) async =>
       _flutterLocalNotification.cancel(id);
+
+  static Future<void> cancelAll() async =>
+      _flutterLocalNotification.cancelAll();
 }
