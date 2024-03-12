@@ -1,3 +1,4 @@
+import 'package:business/core/services/notification_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 abstract class MainLocalDataSource {
@@ -12,5 +13,8 @@ class MainLocalDataSourceImpl implements MainLocalDataSource {
   final SharedPreferences _preferences;
 
   @override
-  Future<void> logOut() async => _preferences.remove('isLoggedIn');
+  Future<void> logOut() async {
+    await NotificationService.cancelAll();
+    await _preferences.clear();
+  }
 }
