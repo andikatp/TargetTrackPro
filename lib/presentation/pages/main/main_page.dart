@@ -47,12 +47,12 @@ class _MainPageState extends State<MainPage> {
             Navigator.pushReplacement(
               context,
               MaterialPageRoute<SplashPage>(
-                builder: (context) => const SplashPage(),
+                builder: (_) => const SplashPage(),
               ),
             );
           }
         },
-        builder: (context, state) {
+        builder: (_, __) {
           return Scaffold(
             appBar: AppBar(
               title: const Text('TargetTrackPro'),

@@ -76,7 +76,7 @@ class _EditTargetPageState extends State<EditTargetPage> {
         },
         style: ElevatedButton.styleFrom(
           shape: const BeveledRectangleBorder(),
-          minimumSize: const Size.fromHeight(Sizes.p64),
+          minimumSize: Size.fromHeight(Sizes.p64.h),
         ),
         child: const Text('Edit Target'),
       ),
