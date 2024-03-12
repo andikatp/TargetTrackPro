@@ -35,7 +35,7 @@ class SplashPage extends StatelessWidget {
                   );
           }
         },
-        builder: (context, state) {
+        builder: (context, _) {
           return Center(
             child: Text(
               'TargetTrackPro',

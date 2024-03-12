@@ -161,7 +161,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       onPressed: () => Navigator.pushReplacement(
                         context,
                         MaterialPageRoute<dynamic>(
-                          builder: (context) => const LoginPage(),
+                          builder: (_) => const LoginPage(),
                         ),
                       ),
                       child: Text(

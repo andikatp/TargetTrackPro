@@ -70,7 +70,7 @@ class _AddTargetPageState extends State<AddTargetPage> {
         },
         style: ElevatedButton.styleFrom(
           shape: const BeveledRectangleBorder(),
-          minimumSize: const Size.fromHeight(Sizes.p64),
+          minimumSize: Size.fromHeight(Sizes.p64.h),
         ),
         child: const Text('Add Target'),
       ),

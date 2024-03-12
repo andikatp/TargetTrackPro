@@ -57,7 +57,7 @@ class LoginPage extends StatelessWidget {
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute<dynamic>(
-                    builder: (context) => const MainPage(),
+                    builder: (_) => const MainPage(),
                   ),
                 );
               }
@@ -107,7 +107,7 @@ class LoginPage extends StatelessWidget {
                       onPressed: () => Navigator.pushReplacement(
                         context,
                         MaterialPageRoute<dynamic>(
-                          builder: (context) => const RegisterPage(),
+                          builder: (_) => const RegisterPage(),
                         ),
                       ),
                       child: Text(
