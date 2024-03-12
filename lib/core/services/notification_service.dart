@@ -31,6 +31,7 @@ class NotificationService {
       initializationSettings,
       onDidReceiveNotificationResponse: (details) {},
     );
+    NotificationService.initializeIsolate();
   }
 
   static void initializeIsolate() {
